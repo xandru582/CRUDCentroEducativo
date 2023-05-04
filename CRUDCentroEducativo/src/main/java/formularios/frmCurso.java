@@ -8,7 +8,11 @@ import com.mycompany.crudcentroeducativo.Entidades.Curso;
 import com.mycompany.crudcentroeducativo.Entidades.CursoAcademico;
 import com.mycompany.crudcentroeducativo.controladorDAO.CursoAcademicoDaoImp;
 import com.mycompany.crudcentroeducativo.controladorDAO.CursoDaoImp;
+import static java.awt.event.KeyEvent.VK_ENTER;
+import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 
 /**
  *
@@ -80,26 +84,34 @@ public class frmCurso extends javax.swing.JFrame {
 
         jLabel1.setText("Buscar");
 
-        txtBuscar.setText("jTextField1");
+        txtBuscar.setText("Escribe y presiona Enter para buscar");
+        txtBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtBuscarActionPerformed(evt);
+            }
+        });
+        txtBuscar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtBuscarKeyPressed(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnlTablaLayout = new javax.swing.GroupLayout(pnlTabla);
         pnlTabla.setLayout(pnlTablaLayout);
         pnlTablaLayout.setHorizontalGroup(
             pnlTablaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlTablaLayout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(pnlTablaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlTablaLayout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(pnlTablaLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 334, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(pnlTablaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 334, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel1))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
-            .addGroup(pnlTablaLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         pnlTablaLayout.setVerticalGroup(
             pnlTablaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -158,6 +170,27 @@ public class frmCurso extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void txtBuscarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyPressed
+        // TODO add your handling code here:
+        if(evt.getKeyCode()==VK_ENTER){
+            System.out.println("PULSANDO ENTER");
+            DefaultTableModel modelo = (DefaultTableModel) jtCursos.getModel();
+            TableRowSorter<TableModel> trSorter = new TableRowSorter<TableModel>(modelo);
+            
+            jtCursos.setRowSorter(trSorter);
+            
+            if (txtBuscar.getText().length()==0) {
+                trSorter.setRowFilter(null);
+            }else{
+                trSorter.setRowFilter(RowFilter.regexFilter(txtBuscar.getText().trim()));
+            }
+        }
+    }//GEN-LAST:event_txtBuscarKeyPressed
+
+    private void txtBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBuscarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtBuscarActionPerformed
 
     /**
      * @param args the command line arguments

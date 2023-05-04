@@ -9,6 +9,9 @@ import com.mycompany.crudcentroeducativo.Entidades.CursoAcademico;
 import com.mycompany.crudcentroeducativo.controladorDAO.AlumnoDaoImp;
 import com.mycompany.crudcentroeducativo.controladorDAO.CursoAcademicoDaoImp;
 import static java.awt.event.KeyEvent.VK_ENTER;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JDialog;
 import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
@@ -52,8 +55,7 @@ public class frmAlumnos extends javax.swing.JFrame {
             modelo.addRow(lista);
         }
         } catch (Exception e) {
-        }
-        
+        } 
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -71,7 +73,7 @@ public class frmAlumnos extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        txtBuscar.setText("jTextField1");
+        txtBuscar.setText("Escribe y presiona Enter para buscar");
         txtBuscar.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txtBuscarKeyPressed(evt);
@@ -165,15 +167,19 @@ public class frmAlumnos extends javax.swing.JFrame {
     private void jtAlumnosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtAlumnosMouseClicked
         // TODO add your handling code here:
         if(evt.getClickCount()==2){
-            System.out.println("DOBLE CLIC");
-            //CARGAR DETALLE DE UN ALUMNO
-            JDialog frame= new JDialog(this,"Detalle Alumno",true);
-            jpAlumnoDetalle panel = new jpAlumnoDetalle();
-                    
-            panel.cargaDetalle(Integer.parseInt(jtAlumnos.getValueAt(jtAlumnos.getSelectedRow(), 0).toString()));
-            frame.getContentPane().add(panel);
-            frame.pack();
-            frame.setVisible(true);
+            try {
+                System.out.println("DOBLE CLIC");
+                //CARGAR DETALLE DE UN ALUMNO
+                JDialog frame= new JDialog(this,"Detalle Alumno",true);
+                jpAlumnoDetalle panel = new jpAlumnoDetalle();
+                
+                panel.cargaDetalle(Integer.parseInt(jtAlumnos.getValueAt(jtAlumnos.getSelectedRow(), 0).toString()));
+                frame.getContentPane().add(panel);
+                frame.pack();
+                frame.setVisible(true);
+            } catch (SQLException ex) {
+                Logger.getLogger(frmAlumnos.class.getName()).log(Level.SEVERE, null, ex);
+            }
             
         }
     }//GEN-LAST:event_jtAlumnosMouseClicked

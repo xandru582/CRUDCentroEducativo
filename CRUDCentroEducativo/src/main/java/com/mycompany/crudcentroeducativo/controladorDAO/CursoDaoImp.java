@@ -48,12 +48,12 @@ public class CursoDaoImp implements CursoDao{
     public List<Curso> getAll() throws SQLException {
         //throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
         ArrayList<Curso> listaCursos = new ArrayList<>();
-        String sql = "select * from cursoacademico";
+        String sql = "select * from curso";
         
         try( //CON ESTO ME CIERRA TODO LAS COSAS AUTOMATICAMENTE TRY-RESOURCES
             
             Connection cn=MyDataSource.getConnection();
-        
+              
             Statement stmt=cn.createStatement();
             
             ResultSet rs = stmt.executeQuery(sql)){
@@ -62,11 +62,12 @@ public class CursoDaoImp implements CursoDao{
                 
                 Curso curso = new Curso();
                 curso.setId(rs.getInt("id"));
-                curso.setCodigo(rs.getString("curso"));
+                curso.setCodigo(rs.getString("codigo"));
                 curso.setNombre(rs.getString("nombre"));
                 curso.setObservaciones(rs.getString("observaciones"));
                 curso.setIdcursoacademico(rs.getInt("idcursoacademico"));
                 listaCursos.add(curso);
+                
 
             }
             
