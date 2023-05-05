@@ -5,6 +5,8 @@
 package formularios;
 
 import com.mycompany.crudcentroeducativo.BD.MyDataSource;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -35,7 +37,7 @@ public class frmMain extends javax.swing.JFrame {
     
     private void generaMenuCursosAcademicos(){
         try {
-            String sql = "select distinct yearinicio from cursoacademico order by yearinicio desc";
+            String sql = "select distinct yearinicio,id from cursoacademico order by yearinicio desc";
             Connection cn = MyDataSource.getConnection();
             PreparedStatement pstm = cn.prepareStatement(sql);
             ResultSet rs = pstm.executeQuery();
@@ -43,8 +45,19 @@ public class frmMain extends javax.swing.JFrame {
             
             while (rs.next()) {
                 JRadioButtonMenuItem jrb = new JRadioButtonMenuItem(("Curso: "+rs.getString("yearinicio")+" - "+(Integer.parseInt(rs.getString("yearinicio"))+1)),true);
+                jrb.setName(rs.getString("id"));
                 menuCursoAcademico.add(jrb);
                 brgCursosAcademicos.add(jrb);
+                
+                jrb.addItemListener(new ItemListener(){
+                
+                    public void itemStateChanged(ItemEvent e){
+                        JRadioButtonMenuItem jrbSelected =(JRadioButtonMenuItem)e.getItem();
+                        
+                        System.out.println(""+jrbSelected.getText());
+                        System.out.println(""+jrbSelected.getName());
+                    }
+                });
             }
             
            
