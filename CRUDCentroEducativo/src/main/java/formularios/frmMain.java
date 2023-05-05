@@ -4,10 +4,19 @@
  */
 package formularios;
 
+import com.mycompany.crudcentroeducativo.BD.MyDataSource;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.ButtonGroup;
 import javax.swing.JDesktopPane;
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
+import javax.swing.JRadioButtonMenuItem;
 
 /**
  *
@@ -21,6 +30,32 @@ public class frmMain extends javax.swing.JFrame {
     public frmMain() {
         initComponents();
         this.setExtendedState(JFrame.MAXIMIZED_BOTH );
+        generaMenuCursosAcademicos();
+    }
+    
+    private void generaMenuCursosAcademicos(){
+        try {
+            String sql = "select distinct yearinicio from cursoacademico order by yearinicio desc";
+            Connection cn = MyDataSource.getConnection();
+            PreparedStatement pstm = cn.prepareStatement(sql);
+            ResultSet rs = pstm.executeQuery();
+            ButtonGroup brgCursosAcademicos = new ButtonGroup();
+            
+            while (rs.next()) {
+                JRadioButtonMenuItem jrb = new JRadioButtonMenuItem(("Curso: "+rs.getString("yearinicio")+" - "+(Integer.parseInt(rs.getString("yearinicio"))+1)),true);
+                menuCursoAcademico.add(jrb);
+                brgCursosAcademicos.add(jrb);
+            }
+            
+           
+            
+            rs.close();
+            pstm.close();
+            
+            //menuCursoAcademico.add(a)
+        } catch (SQLException ex) {
+            Logger.getLogger(frmMain.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -43,6 +78,7 @@ public class frmMain extends javax.swing.JFrame {
         optmCursoAcademico = new javax.swing.JMenuItem();
         copyMenuItem = new javax.swing.JMenuItem();
         optmAlumno = new javax.swing.JMenuItem();
+        menuCursoAcademico = new javax.swing.JMenu();
         helpMenu = new javax.swing.JMenu();
         contentMenuItem = new javax.swing.JMenuItem();
         aboutMenuItem = new javax.swing.JMenuItem();
@@ -108,6 +144,9 @@ public class frmMain extends javax.swing.JFrame {
         editMenu.add(optmAlumno);
 
         menuBar.add(editMenu);
+
+        menuCursoAcademico.setText("Año Academico");
+        menuBar.add(menuCursoAcademico);
 
         helpMenu.setMnemonic('h');
         helpMenu.setText("Ayuda");
@@ -175,7 +214,9 @@ public class frmMain extends javax.swing.JFrame {
             }
         }*/
         frmInternoAlumnos frmAlum = new frmInternoAlumnos();
+        //frmAlumnos frmAlum = new frmAlumnos();
         compruebaFrame(frmAlum, pnldEscritorio);
+        
         pnldEscritorio.add(frmAlum);
         
         
@@ -190,6 +231,10 @@ public class frmMain extends javax.swing.JFrame {
             }
         }
         panel.add(objeFrame);
+        for (JInternalFrame object : panel.getAllFrames()) {
+            if(objeFrame.equals(object))
+                object.show();
+        }
         objeFrame.show();
         
         
@@ -238,6 +283,7 @@ public class frmMain extends javax.swing.JFrame {
     private javax.swing.JMenu fileMenu;
     private javax.swing.JMenu helpMenu;
     private javax.swing.JMenuBar menuBar;
+    private javax.swing.JMenu menuCursoAcademico;
     private javax.swing.JMenuItem openMenuItem;
     private javax.swing.JMenuItem optmAlumno;
     private javax.swing.JMenuItem optmCursoAcademico;

@@ -78,6 +78,11 @@
             </MenuItem>
           </SubComponents>
         </Menu>
+        <Menu class="javax.swing.JMenu" name="menuCursoAcademico">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="A&#xf1;o Academico"/>
+          </Properties>
+        </Menu>
         <Menu class="javax.swing.JMenu" name="helpMenu">
           <Properties>
             <Property name="mnemonic" type="int" value="104"/>
