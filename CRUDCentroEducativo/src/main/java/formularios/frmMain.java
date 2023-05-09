@@ -5,6 +5,7 @@
 package formularios;
 
 import com.mycompany.crudcentroeducativo.BD.MyDataSource;
+import java.awt.BorderLayout;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.sql.Connection;
@@ -18,6 +19,8 @@ import javax.swing.ButtonGroup;
 import javax.swing.JDesktopPane;
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JRadioButtonMenuItem;
 
 /**
@@ -29,10 +32,15 @@ public class frmMain extends javax.swing.JFrame {
     /**
      * Creates new form frmMain
      */
+    public int idCursoAcademico=0;
+    private JLabel statusLabel;
     public frmMain() {
         initComponents();
         this.setExtendedState(JFrame.MAXIMIZED_BOTH );
         generaMenuCursosAcademicos();
+        /*JPanel status = new JPanel();
+        statusLabel = new JLabel("");
+        this.getContentPane().add(status,BorderLayout.SOUTH);*/
     }
     
     private void generaMenuCursosAcademicos(){
@@ -55,7 +63,11 @@ public class frmMain extends javax.swing.JFrame {
                         JRadioButtonMenuItem jrbSelected =(JRadioButtonMenuItem)e.getItem();
                         
                         System.out.println(""+jrbSelected.getText());
-                        System.out.println(""+jrbSelected.getName());
+                        //lblCursoActual.setText(""+jrbSelected.getText());
+                        //System.out.println(""+jrbSelected.getName());
+                        idCursoAcademico = Integer.parseInt(jrbSelected.getName());
+                        //statusLabel.setText(idCursoAcademico);
+                        System.out.println(idCursoAcademico);
                     }
                 });
             }
@@ -97,6 +109,8 @@ public class frmMain extends javax.swing.JFrame {
         aboutMenuItem = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        pnldEscritorio.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         fileMenu.setMnemonic('f');
         fileMenu.setText("Parametrizacion");
@@ -186,11 +200,11 @@ public class frmMain extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pnldEscritorio, javax.swing.GroupLayout.DEFAULT_SIZE, 634, Short.MAX_VALUE)
+            .addComponent(pnldEscritorio, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 634, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pnldEscritorio, javax.swing.GroupLayout.DEFAULT_SIZE, 315, Short.MAX_VALUE)
+            .addComponent(pnldEscritorio, javax.swing.GroupLayout.DEFAULT_SIZE, 351, Short.MAX_VALUE)
         );
 
         pack();

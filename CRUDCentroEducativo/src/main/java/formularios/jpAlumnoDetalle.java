@@ -34,6 +34,31 @@ public class jpAlumnoDetalle extends javax.swing.JPanel {
         //cargaCampos();
         
     }
+    private void actualizaAlumno(){
+        try {
+            String sql="update alumno set dni=?,nombre=?,apellido1=?,apellido2=?,fNacimiento=?,telefono=?,email=?,direccion=?,cp=?,poblacion=? where id=?";
+            Connection cn=MyDataSource.getConnection();
+            PreparedStatement sentencia=cn.prepareStatement(sql);
+            sentencia.setString(1, txtDni.getText());
+            sentencia.setString(2, txtNombre.getText());
+            sentencia.setString(3, txtApellido1.getText());
+            sentencia.setString(4, txtApellido2.getText());
+            sentencia.setString(5, txtFnacimiento.getText());
+            sentencia.setString(6, txtTelefono.getText());
+            sentencia.setString(7, txtEmail.getText());
+            sentencia.setString(8, txtDireccion.getText());
+            sentencia.setString(9, txtCp.getText());
+            sentencia.setString(10, txtPoblacion.getText());
+            sentencia.setInt(11, alumnoCargado.getId());
+            System.out.println("hola");
+            sentencia.executeUpdate();
+            sentencia.close();
+            consultaAlumno();
+            cargaCampos();
+        } catch (SQLException ex) {
+            Logger.getLogger(jpAlumnoDetalle.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
     public void cargaDetalle (int id) throws SQLException{
         this.id=id;
         lblId.setText(""+id);
@@ -54,7 +79,7 @@ public class jpAlumnoDetalle extends javax.swing.JPanel {
         txtFnacimiento.setText(fechaComoCadena);
         txtPoblacion.setText(alum.getPoblacion());
         txtTelefono.setText(alum.getTelefono());
-        
+        txtDni.setText(alum.getDni());
         
     }
     private Alumno consultaAlumno() throws SQLException{
@@ -129,6 +154,8 @@ public class jpAlumnoDetalle extends javax.swing.JPanel {
         txtPoblacion = new javax.swing.JTextField();
         btnActualiza = new javax.swing.JButton();
         btnRestablecer = new javax.swing.JButton();
+        jLabel10 = new javax.swing.JLabel();
+        txtDni = new javax.swing.JTextField();
 
         jPanel1.setBackground(new java.awt.Color(255, 153, 153));
 
@@ -186,12 +213,25 @@ public class jpAlumnoDetalle extends javax.swing.JPanel {
 
         btnActualiza.setBackground(new java.awt.Color(51, 204, 0));
         btnActualiza.setText("Actualiza");
+        btnActualiza.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnActualizaActionPerformed(evt);
+            }
+        });
 
         btnRestablecer.setBackground(new java.awt.Color(51, 204, 0));
         btnRestablecer.setText("Restablecer");
         btnRestablecer.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnRestablecerActionPerformed(evt);
+            }
+        });
+
+        jLabel10.setText("Dni");
+
+        txtDni.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtDniActionPerformed(evt);
             }
         });
 
@@ -204,19 +244,17 @@ public class jpAlumnoDetalle extends javax.swing.JPanel {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel2)
-                            .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtApellido1)
-                            .addComponent(txtApellido2, javax.swing.GroupLayout.DEFAULT_SIZE, 116, Short.MAX_VALUE))
+                        .addComponent(jLabel4)
+                        .addComponent(jLabel3)
+                        .addComponent(jLabel2)
+                        .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtApellido1)
+                        .addComponent(txtApellido2)
                         .addComponent(txtFnacimiento))
                     .addComponent(btnActualiza)
                     .addComponent(btnRestablecer))
                 .addGap(187, 187, 187)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtPoblacion, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel9)
                     .addComponent(jLabel7)
                     .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -225,7 +263,11 @@ public class jpAlumnoDetalle extends javax.swing.JPanel {
                     .addComponent(jLabel8)
                     .addComponent(txtDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, 279, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblPoblacion)
-                    .addComponent(txtCp, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtCp, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel10)
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(txtDni, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(txtPoblacion, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 136, Short.MAX_VALUE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -256,9 +298,9 @@ public class jpAlumnoDetalle extends javax.swing.JPanel {
                     .addComponent(txtApellido2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(jLabel9))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel9)
+                    .addComponent(jLabel5))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtFnacimiento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -268,12 +310,16 @@ public class jpAlumnoDetalle extends javax.swing.JPanel {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(lblPoblacion)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtPoblacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(txtPoblacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel10))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(btnActualiza)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnRestablecer)))
-                .addContainerGap(39, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtDni, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(15, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -311,11 +357,21 @@ public class jpAlumnoDetalle extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_btnRestablecerActionPerformed
 
+    private void txtDniActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDniActionPerformed
+        
+    }//GEN-LAST:event_txtDniActionPerformed
+
+    private void btnActualizaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizaActionPerformed
+        // TODO add your handling code here:
+        actualizaAlumno();
+    }//GEN-LAST:event_btnActualizaActionPerformed
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnActualiza;
     private javax.swing.JButton btnRestablecer;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -332,6 +388,7 @@ public class jpAlumnoDetalle extends javax.swing.JPanel {
     private javax.swing.JTextField txtApellido2;
     private javax.swing.JTextField txtCp;
     private javax.swing.JTextField txtDireccion;
+    private javax.swing.JTextField txtDni;
     private javax.swing.JTextField txtEmail;
     private javax.swing.JTextField txtFnacimiento;
     private javax.swing.JTextField txtNombre;

@@ -95,8 +95,10 @@ public class frmLogin extends javax.swing.JFrame {
         try{
              if(usuariodao.valida(usuario, passwd)){
             System.out.println("EXISTE");
-            frmCursoAcademico fcurso = new frmCursoAcademico();
-            fcurso.setVisible(true);
+            //frmCursoAcademico fcurso = new frmCursoAcademico();
+            //fcurso.setVisible(true);
+            frmMain fmenuPrincipal = new frmMain();
+            fmenuPrincipal.setVisible(true);
             this.setVisible(false);
         }else{
                  System.out.println("NO ENCONTRADO");

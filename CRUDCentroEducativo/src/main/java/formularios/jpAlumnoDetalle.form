@@ -102,14 +102,12 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                           <Component id="jLabel5" max="32767" attributes="0"/>
-                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
-                              <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
-                              <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
-                              <Component id="txtNombre" min="-2" pref="88" max="-2" attributes="0"/>
-                              <Component id="txtApellido1" alignment="0" max="32767" attributes="0"/>
-                              <Component id="txtApellido2" alignment="0" pref="116" max="32767" attributes="0"/>
-                          </Group>
+                          <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
+                          <Component id="txtNombre" min="-2" pref="88" max="-2" attributes="0"/>
+                          <Component id="txtApellido1" alignment="0" max="32767" attributes="0"/>
+                          <Component id="txtApellido2" alignment="0" max="32767" attributes="0"/>
                           <Component id="txtFnacimiento" alignment="0" max="32767" attributes="0"/>
                       </Group>
                       <Component id="btnActualiza" min="-2" max="-2" attributes="0"/>
@@ -117,7 +115,6 @@
                   </Group>
                   <EmptySpace min="-2" pref="187" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="txtPoblacion" min="-2" pref="136" max="-2" attributes="0"/>
                       <Component id="jLabel9" min="-2" max="-2" attributes="0"/>
                       <Component id="jLabel7" min="-2" max="-2" attributes="0"/>
                       <Component id="txtEmail" min="-2" max="-2" attributes="0"/>
@@ -127,6 +124,11 @@
                       <Component id="txtDireccion" alignment="0" min="-2" pref="279" max="-2" attributes="0"/>
                       <Component id="lblPoblacion" min="-2" max="-2" attributes="0"/>
                       <Component id="txtCp" min="-2" pref="81" max="-2" attributes="0"/>
+                      <Component id="jLabel10" min="-2" max="-2" attributes="0"/>
+                      <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
+                          <Component id="txtDni" alignment="0" max="32767" attributes="0"/>
+                          <Component id="txtPoblacion" alignment="0" pref="136" max="32767" attributes="0"/>
+                      </Group>
                   </Group>
                   <EmptySpace max="32767" attributes="0"/>
               </Group>
@@ -166,9 +168,9 @@
                       <Component id="txtDireccion" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="jLabel5" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="jLabel9" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
@@ -181,6 +183,8 @@
                           <Component id="lblPoblacion" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="txtPoblacion" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="jLabel10" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="btnActualiza" min="-2" max="-2" attributes="0"/>
@@ -188,7 +192,9 @@
                           <Component id="btnRestablecer" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
-                  <EmptySpace pref="39" max="32767" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="txtDni" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace pref="15" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -267,6 +273,9 @@
             </Property>
             <Property name="text" type="java.lang.String" value="Actualiza"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnActualizaActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btnRestablecer">
           <Properties>
@@ -277,6 +286,16 @@
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnRestablecerActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JLabel" name="jLabel10">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Dni"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JTextField" name="txtDni">
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtDniActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>
