@@ -111,7 +111,16 @@ public class frmMain extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        pnldEscritorio.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        javax.swing.GroupLayout pnldEscritorioLayout = new javax.swing.GroupLayout(pnldEscritorio);
+        pnldEscritorio.setLayout(pnldEscritorioLayout);
+        pnldEscritorioLayout.setHorizontalGroup(
+            pnldEscritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 634, Short.MAX_VALUE)
+        );
+        pnldEscritorioLayout.setVerticalGroup(
+            pnldEscritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 351, Short.MAX_VALUE)
+        );
 
         fileMenu.setMnemonic('f');
         fileMenu.setText("Parametrizacion");
@@ -209,11 +218,11 @@ public class frmMain extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pnldEscritorio, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 634, Short.MAX_VALUE)
+            .addComponent(pnldEscritorio, javax.swing.GroupLayout.Alignment.TRAILING)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pnldEscritorio, javax.swing.GroupLayout.DEFAULT_SIZE, 351, Short.MAX_VALUE)
+            .addComponent(pnldEscritorio)
         );
 
         pack();
@@ -243,20 +252,19 @@ public class frmMain extends javax.swing.JFrame {
     private void optmAlumnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_optmAlumnoActionPerformed
         // TODO add your handling code here:
         
-       /* for (JInternalFrame object :  pnldEscritorio.getAllFrames()) {
+        for (JInternalFrame object :  pnldEscritorio.getAllFrames()) {
             if (object.getClass().equals(frmInternoAlumnos.class)) {
                 System.out.println("YA AÑADIDO");
                 return;
             }
-        }*/
+        }
         frmInternoAlumnos frmAlum = new frmInternoAlumnos();
-        //frmAlumnos frmAlum = new frmAlumnos();
-        compruebaFrame(frmAlum, pnldEscritorio);
         
         pnldEscritorio.add(frmAlum);
         
         
         frmAlum.show();
+        frmAlum.setVisible(true);
         
     }//GEN-LAST:event_optmAlumnoActionPerformed
 
@@ -266,7 +274,7 @@ public class frmMain extends javax.swing.JFrame {
         pnldEscritorio.add(frmuni);
         frmuni.show();
     }//GEN-LAST:event_jMenuItem1ActionPerformed
-    public void compruebaFrame(JInternalFrame objeFrame, JDesktopPane panel){
+    /*public void compruebaFrame(JInternalFrame objeFrame, JDesktopPane panel){
         for (JInternalFrame object : panel.getAllFrames()) {
             if(object.getClass().equals(panel.getClass())){
                 System.out.println("EXISTE");
@@ -281,7 +289,7 @@ public class frmMain extends javax.swing.JFrame {
         objeFrame.show();
         
         
-    }
+    }*/
     /**
      * @param args the command line arguments
      */

@@ -7,6 +7,9 @@ package formularios;
 import com.mycompany.crudcentroeducativo.Entidades.Alumno;
 import com.mycompany.crudcentroeducativo.controladorDAO.AlumnoDaoImp;
 import static java.awt.event.KeyEvent.VK_ENTER;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JDialog;
 import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
@@ -40,7 +43,7 @@ public class frmInternoAlumnos extends javax.swing.JInternalFrame {
         
     }
     
-    private void cargaTabla(){
+    public void cargaTabla(){
         DefaultTableModel modelo = (DefaultTableModel)jtAlumnos.getModel();
         AlumnoDaoImp alumnoDaoImp = AlumnoDaoImp.getInstance();
         try {
@@ -73,13 +76,15 @@ public class frmInternoAlumnos extends javax.swing.JInternalFrame {
         setMaximizable(true);
         setResizable(true);
         setTitle("Alumnos");
+        getContentPane().setLayout(new java.awt.FlowLayout());
 
-        txtBuscar.setText("jTextField1");
+        txtBuscar.setText("Escribe y presiona Enter para buscar");
         txtBuscar.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txtBuscarKeyPressed(evt);
             }
         });
+        getContentPane().add(txtBuscar);
 
         jtAlumnos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -124,26 +129,7 @@ public class frmInternoAlumnos extends javax.swing.JInternalFrame {
                 .addContainerGap())
         );
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(27, 27, 27)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(68, 68, 68)
-                .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(41, 41, 41)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+        getContentPane().add(jPanel1);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -166,18 +152,25 @@ public class frmInternoAlumnos extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txtBuscarKeyPressed
 
     private void jtAlumnosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtAlumnosMouseClicked
-        // TODO add your handling code here:
+         // TODO add your handling code here:
         if(evt.getClickCount()==2){
-            System.out.println("DOBLE CLIC");
-            //CARGAR DETALLE DE UN ALUMNO
-            //JDialog frame= new JDialog(this,"Detalle Alumno",true);
-            //jpAlumnoDetalle panel = new jpAlumnoDetalle();
-
-            //panel.cargaDetalle(Integer.parseInt(jtAlumnos.getValueAt(jtAlumnos.getSelectedRow(), 0).toString()));
-            //frame.getContentPane().add(panel);
-            //frame.pack();
-            //frame.setVisible(true);
-
+            try {
+                System.out.println("DOBLE CLIC");
+                //CARGAR DETALLE DE UN ALUMNO
+                JDialog frame = new JDialog();
+                frame.setTitle("Alumno Detalle");
+                jpAlumnoDetalle panel = new jpAlumnoDetalle();
+                
+                panel.cargaDetalle(Integer.parseInt(jtAlumnos.getValueAt(jtAlumnos.getSelectedRow(), 0).toString()));
+                panel.formInternoAlumnos=this;
+                frame.getContentPane().add(panel);
+                frame.pack();
+                frame.setVisible(true);
+                
+            } catch (SQLException ex) {
+                Logger.getLogger(frmAlumnos.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
         }
     }//GEN-LAST:event_jtAlumnosMouseClicked
 
