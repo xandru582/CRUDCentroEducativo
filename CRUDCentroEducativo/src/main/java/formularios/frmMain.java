@@ -101,6 +101,7 @@ public class frmMain extends javax.swing.JFrame {
         exitMenuItem = new javax.swing.JMenuItem();
         editMenu = new javax.swing.JMenu();
         optmCursoAcademico = new javax.swing.JMenuItem();
+        jMenuItem1 = new javax.swing.JMenuItem();
         copyMenuItem = new javax.swing.JMenuItem();
         optmAlumno = new javax.swing.JMenuItem();
         menuCursoAcademico = new javax.swing.JMenu();
@@ -150,6 +151,14 @@ public class frmMain extends javax.swing.JFrame {
             }
         });
         editMenu.add(optmCursoAcademico);
+
+        jMenuItem1.setText("Unidades");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        editMenu.add(jMenuItem1);
 
         copyMenuItem.setMnemonic('y');
         copyMenuItem.setText("Curso");
@@ -250,6 +259,13 @@ public class frmMain extends javax.swing.JFrame {
         frmAlum.show();
         
     }//GEN-LAST:event_optmAlumnoActionPerformed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        // TODO add your handling code here:
+        frmUnidades2 frmuni = new frmUnidades2();
+        pnldEscritorio.add(frmuni);
+        frmuni.show();
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
     public void compruebaFrame(JInternalFrame objeFrame, JDesktopPane panel){
         for (JInternalFrame object : panel.getAllFrames()) {
             if(object.getClass().equals(panel.getClass())){
@@ -309,6 +325,7 @@ public class frmMain extends javax.swing.JFrame {
     private javax.swing.JMenuItem exitMenuItem;
     private javax.swing.JMenu fileMenu;
     private javax.swing.JMenu helpMenu;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuBar menuBar;
     private javax.swing.JMenu menuCursoAcademico;
     private javax.swing.JMenuItem openMenuItem;

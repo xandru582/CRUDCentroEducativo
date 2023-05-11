@@ -16,6 +16,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -25,6 +26,7 @@ import javax.swing.table.DefaultTableModel;
 public class jpAlumnoDetalle extends javax.swing.JPanel {
     public int id;
     private Alumno alumnoCargado;
+    public frmAlumnos formAlumnos;
     /**
      * Creates new form jpAlumnoDetalle
      */
@@ -55,6 +57,9 @@ public class jpAlumnoDetalle extends javax.swing.JPanel {
             sentencia.close();
             consultaAlumno();
             cargaCampos();
+            JOptionPane.showMessageDialog(null, "La actualización se realizó correctamente.");
+            formAlumnos.cargaTabla();
+            
         } catch (SQLException ex) {
             Logger.getLogger(jpAlumnoDetalle.class.getName()).log(Level.SEVERE, null, ex);
         }

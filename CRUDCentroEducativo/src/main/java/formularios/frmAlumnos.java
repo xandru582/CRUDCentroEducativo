@@ -45,7 +45,7 @@ public class frmAlumnos extends javax.swing.JFrame {
         
     }
     
-    private void cargaTabla(){
+    public void cargaTabla(){
         DefaultTableModel modelo = (DefaultTableModel)jtAlumnos.getModel();
         AlumnoDaoImp alumnoDaoImp = AlumnoDaoImp.getInstance();
         try {
@@ -174,14 +174,17 @@ public class frmAlumnos extends javax.swing.JFrame {
                 jpAlumnoDetalle panel = new jpAlumnoDetalle();
                 
                 panel.cargaDetalle(Integer.parseInt(jtAlumnos.getValueAt(jtAlumnos.getSelectedRow(), 0).toString()));
+                panel.formAlumnos=this;
                 frame.getContentPane().add(panel);
                 frame.pack();
                 frame.setVisible(true);
+                
             } catch (SQLException ex) {
                 Logger.getLogger(frmAlumnos.class.getName()).log(Level.SEVERE, null, ex);
             }
             
         }
+        
     }//GEN-LAST:event_jtAlumnosMouseClicked
 
     /**
