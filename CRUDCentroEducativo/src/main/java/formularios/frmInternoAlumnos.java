@@ -49,7 +49,7 @@ public class frmInternoAlumnos extends javax.swing.JInternalFrame {
         try {
             modelo.setNumRows(0);
             for (Alumno alumno : alumnoDaoImp.getAll()) {
-            Object [] lista = {alumno.getId(),alumno.getDni(),alumno.getNombre(),alumno.getApellido1(),alumno.getApellido2(),alumno.getfNacimiento(),alumno.getEmail(),alumno.getDireccion(),alumno.getCp(),alumno.getPoblacion()};
+            Object [] lista = {alumno.getId(),alumno.getDni(),alumno.getNombre(),alumno.getApellido1(),alumno.getApellido2(),alumno.getfNacimiento(),alumno.getTelefono(),alumno.getEmail(),alumno.getDireccion(),alumno.getCp(),alumno.getPoblacion()};
             modelo.addRow(lista);
         }
         } catch (Exception e) {
@@ -105,6 +105,7 @@ public class frmInternoAlumnos extends javax.swing.JInternalFrame {
                 return canEdit [columnIndex];
             }
         });
+        jtAlumnos.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
         jtAlumnos.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jtAlumnosMouseClicked(evt);
@@ -117,16 +118,16 @@ public class frmInternoAlumnos extends javax.swing.JInternalFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 803, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 803, Short.MAX_VALUE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 275, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         getContentPane().add(jPanel1);

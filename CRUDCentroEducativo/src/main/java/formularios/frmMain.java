@@ -93,6 +93,8 @@ public class frmMain extends javax.swing.JFrame {
     private void initComponents() {
 
         pnldEscritorio = new javax.swing.JDesktopPane();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
         menuBar = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
         openMenuItem = new javax.swing.JMenuItem();
@@ -102,6 +104,7 @@ public class frmMain extends javax.swing.JFrame {
         editMenu = new javax.swing.JMenu();
         optmCursoAcademico = new javax.swing.JMenuItem();
         jMenuItem1 = new javax.swing.JMenuItem();
+        optmAutorizaciones = new javax.swing.JMenuItem();
         copyMenuItem = new javax.swing.JMenuItem();
         optmAlumno = new javax.swing.JMenuItem();
         menuCursoAcademico = new javax.swing.JMenu();
@@ -111,15 +114,42 @@ public class frmMain extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        jButton1.setText("AUTORIZACIONES");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        jButton2.setText("ALUMNOS");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
+        pnldEscritorio.setLayer(jButton1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        pnldEscritorio.setLayer(jButton2, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
         javax.swing.GroupLayout pnldEscritorioLayout = new javax.swing.GroupLayout(pnldEscritorio);
         pnldEscritorio.setLayout(pnldEscritorioLayout);
         pnldEscritorioLayout.setHorizontalGroup(
             pnldEscritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 634, Short.MAX_VALUE)
+            .addGroup(pnldEscritorioLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jButton1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(333, Short.MAX_VALUE))
         );
         pnldEscritorioLayout.setVerticalGroup(
             pnldEscritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 351, Short.MAX_VALUE)
+            .addGroup(pnldEscritorioLayout.createSequentialGroup()
+                .addGap(15, 15, 15)
+                .addGroup(pnldEscritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(283, Short.MAX_VALUE))
         );
 
         fileMenu.setMnemonic('f');
@@ -168,6 +198,14 @@ public class frmMain extends javax.swing.JFrame {
             }
         });
         editMenu.add(jMenuItem1);
+
+        optmAutorizaciones.setText("Autorizaciones");
+        optmAutorizaciones.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                optmAutorizacionesActionPerformed(evt);
+            }
+        });
+        editMenu.add(optmAutorizaciones);
 
         copyMenuItem.setMnemonic('y');
         copyMenuItem.setText("Curso");
@@ -274,6 +312,19 @@ public class frmMain extends javax.swing.JFrame {
         pnldEscritorio.add(frmuni);
         frmuni.show();
     }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void optmAutorizacionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_optmAutorizacionesActionPerformed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_optmAutorizacionesActionPerformed
     /*public void compruebaFrame(JInternalFrame objeFrame, JDesktopPane panel){
         for (JInternalFrame object : panel.getAllFrames()) {
             if(object.getClass().equals(panel.getClass())){
@@ -333,11 +384,14 @@ public class frmMain extends javax.swing.JFrame {
     private javax.swing.JMenuItem exitMenuItem;
     private javax.swing.JMenu fileMenu;
     private javax.swing.JMenu helpMenu;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuBar menuBar;
     private javax.swing.JMenu menuCursoAcademico;
     private javax.swing.JMenuItem openMenuItem;
     private javax.swing.JMenuItem optmAlumno;
+    private javax.swing.JMenuItem optmAutorizaciones;
     private javax.swing.JMenuItem optmCursoAcademico;
     private javax.swing.JDesktopPane pnldEscritorio;
     private javax.swing.JMenuItem saveAsMenuItem;
