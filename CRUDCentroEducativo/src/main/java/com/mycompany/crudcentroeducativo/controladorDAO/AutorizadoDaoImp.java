@@ -61,7 +61,31 @@ public class AutorizadoDaoImp implements AutorizadoDao{
 
     @Override
     public void delete(int id) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        //throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        String sql = "delete from autorizado where id = ?";
+        try( //CON ESTO ME CIERRA TODO LAS COSAS AUTOMATICAMENTE TRY-RESOURCES
+        Connection cn=MyDataSource.getConnection();
+        
+        PreparedStatement pstm=cn.prepareStatement(sql);){
+           pstm.setInt(1, id);
+           pstm.execute();
+           
+        }catch(Exception e){
+            
+        }
+    }
+    public void delete(String dni) throws SQLException{
+        String sql = "delete from autorizado where dni = ?";
+        try( //CON ESTO ME CIERRA TODO LAS COSAS AUTOMATICAMENTE TRY-RESOURCES
+        Connection cn=MyDataSource.getConnection();
+        
+        PreparedStatement pstm=cn.prepareStatement(sql);){
+           pstm.setString(1, dni);
+           pstm.execute();
+           JOptionPane.showMessageDialog(null, "Borrado correctamente");
+        }catch(Exception e){
+            
+        }
     }
 
     
@@ -139,7 +163,26 @@ public class AutorizadoDaoImp implements AutorizadoDao{
 
     @Override
     public int update(Autorizado c) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        //throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        String sql = "UPDATE autorizado set dni=?, nombre=?, apellido1=?, apellido2=?,parentesco=? where dni=?";
+
+    try {
+        Connection cn = MyDataSource.getConnection();
+        PreparedStatement sentencia = cn.prepareStatement(sql);
+        sentencia.setString(1, c.getDni());
+        sentencia.setString(2, c.getNombre());
+        sentencia.setString(3, c.getApellido1());
+        sentencia.setString(4, c.getApellido2());
+        sentencia.setString(5, c.getParentesco());
+        sentencia.setString(6, c.getDni());
+        int filasInsertadas = sentencia.executeUpdate();
+        sentencia.close();
+        cn.close();
+        return filasInsertadas;
+    } catch (SQLException ex) {
+        Logger.getLogger(frmAutorizados.class.getName()).log(Level.SEVERE, null, ex);
+        return 0;
+    }
     }
 
     @Override
