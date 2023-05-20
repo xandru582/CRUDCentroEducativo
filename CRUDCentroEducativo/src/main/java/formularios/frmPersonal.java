@@ -22,6 +22,7 @@ public class frmPersonal extends javax.swing.JFrame {
      * Creates new form frmPersonal
      */
     private Personal miPersonalInterno;
+
     public frmPersonal() {
         initComponents();
     }
@@ -253,7 +254,7 @@ public class frmPersonal extends javax.swing.JFrame {
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         // TODO add your handling code here:
-        miPersonalInterno=consultaPersonal();
+        miPersonalInterno = consultaPersonal();
         CargaCampos();
     }//GEN-LAST:event_btnBuscarActionPerformed
 
@@ -264,13 +265,15 @@ public class frmPersonal extends javax.swing.JFrame {
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         // TODO add your handling code here:
-       eliminarPersonal();
+        eliminarPersonal();
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
         // TODO add your handling code here:
-        if(miPersonalInterno!=null)updatePersonal();
-        
+        if (miPersonalInterno != null) {
+            updatePersonal();
+        }
+
     }//GEN-LAST:event_btnActualizarActionPerformed
 
     private void btnAddPersonalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddPersonalActionPerformed
@@ -312,32 +315,35 @@ public class frmPersonal extends javax.swing.JFrame {
             }
         });
     }
+
     private void CargaCampos() {
-        if(miPersonalInterno != null){
-    txtDni.setText(miPersonalInterno.getDni());
-    txtNombre.setText(miPersonalInterno.getNombre());
-    txtApellido1.setText(miPersonalInterno.getApellido1());
-    txtApellido2.setText(miPersonalInterno.getApellido2());
-    txtDireccion.setText(miPersonalInterno.getDireccion());
-    txtCp.setText(miPersonalInterno.getCp());
-    txtPoblacion.setText(miPersonalInterno.getPoblacion());
-    txtProvincia.setText(miPersonalInterno.getProvincia());
-    txtTelefono.setText(miPersonalInterno.getTelefono());
-    txtEmail.setText(miPersonalInterno.getEmail());
-    txtTipo.setText(String.valueOf(miPersonalInterno.getTipo()));
+        if (miPersonalInterno != null) {
+            txtDni.setText(miPersonalInterno.getDni());
+            txtNombre.setText(miPersonalInterno.getNombre());
+            txtApellido1.setText(miPersonalInterno.getApellido1());
+            txtApellido2.setText(miPersonalInterno.getApellido2());
+            txtDireccion.setText(miPersonalInterno.getDireccion());
+            txtCp.setText(miPersonalInterno.getCp());
+            txtPoblacion.setText(miPersonalInterno.getPoblacion());
+            txtProvincia.setText(miPersonalInterno.getProvincia());
+            txtTelefono.setText(miPersonalInterno.getTelefono());
+            txtEmail.setText(miPersonalInterno.getEmail());
+            txtTipo.setText(String.valueOf(miPersonalInterno.getTipo()));
         }
-}
-    private Personal consultaPersonal(){
-        
+    }
+
+    private Personal consultaPersonal() {
+
         PersonalDaoImp instanciaPersonalDaoImp = PersonalDaoImp.getInstance();
         try {
-            return  instanciaPersonalDaoImp.getByDni(txtDni.getText());
+            return instanciaPersonalDaoImp.getByDni(txtDni.getText());
         } catch (SQLException ex) {
             Logger.getLogger(frmAutorizados.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
     }
-    private void eliminarPersonal(){
+
+    private void eliminarPersonal() {
         PersonalDaoImp instanciaDaoImp = PersonalDaoImp.getInstance();
         try {
             instanciaDaoImp.delete(miPersonalInterno.getId());
@@ -345,63 +351,66 @@ public class frmPersonal extends javax.swing.JFrame {
             Logger.getLogger(frmPersonal.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
     private void RestablecerCampos() {
-    txtNombre.setText("");
-    txtApellido1.setText("");
-    txtApellido2.setText("");
-    txtDni.setText("");
-    txtDireccion.setText("");
-    txtCp.setText("");
-    txtPoblacion.setText("");
-    txtProvincia.setText("");
-    txtTelefono.setText("");
-    txtEmail.setText("");
-    txtTipo.setText("");
+        txtNombre.setText("");
+        txtApellido1.setText("");
+        txtApellido2.setText("");
+        txtDni.setText("");
+        txtDireccion.setText("");
+        txtCp.setText("");
+        txtPoblacion.setText("");
+        txtProvincia.setText("");
+        txtTelefono.setText("");
+        txtEmail.setText("");
+        txtTipo.setText("");
     }
+
     private void updatePersonal() {
-    PersonalDaoImp instanciaPersonalDaoImp = PersonalDaoImp.getInstance();
-    Personal personal = new Personal();
-    personal.setId(miPersonalInterno.getId());
-    personal.setDni(txtDni.getText());
-    personal.setNombre(txtNombre.getText());
-    personal.setApellido1(txtApellido1.getText());
-    personal.setApellido2(txtApellido2.getText());
-    personal.setTipo(Integer.parseInt(txtTipo.getText()));
-    personal.setTelefono(txtTelefono.getText());
-    personal.setEmail(txtEmail.getText());
-    personal.setDireccion(txtDireccion.getText());
-    personal.setCp(txtCp.getText());
-    personal.setPoblacion(txtPoblacion.getText());
-    personal.setProvincia(txtProvincia.getText());
+        PersonalDaoImp instanciaPersonalDaoImp = PersonalDaoImp.getInstance();
+        Personal personal = new Personal();
+        personal.setId(miPersonalInterno.getId());
+        personal.setDni(txtDni.getText());
+        personal.setNombre(txtNombre.getText());
+        personal.setApellido1(txtApellido1.getText());
+        personal.setApellido2(txtApellido2.getText());
+        personal.setTipo(Integer.parseInt(txtTipo.getText()));
+        personal.setTelefono(txtTelefono.getText());
+        personal.setEmail(txtEmail.getText());
+        personal.setDireccion(txtDireccion.getText());
+        personal.setCp(txtCp.getText());
+        personal.setPoblacion(txtPoblacion.getText());
+        personal.setProvincia(txtProvincia.getText());
 
-    try {
-        instanciaPersonalDaoImp.update(personal);
-    } catch (SQLException ex) {
-        Logger.getLogger(frmPersonal.class.getName()).log(Level.SEVERE, null, ex);
+        try {
+            instanciaPersonalDaoImp.update(personal);
+        } catch (SQLException ex) {
+            Logger.getLogger(frmPersonal.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
-}
-private void addPersonal() {
-    PersonalDaoImp instanciaPersonalDaoImp = PersonalDaoImp.getInstance();
-    Personal personal = new Personal();
-    personal.setDni(txtDni.getText());
-    personal.setNombre(txtNombre.getText());
-    personal.setApellido1(txtApellido1.getText());
-    personal.setApellido2(txtApellido2.getText());
-    personal.setTipo(Integer.parseInt(txtTipo.getText()));
-    personal.setTelefono(txtTelefono.getText());
-    personal.setEmail(txtEmail.getText());
-    personal.setDireccion(txtDireccion.getText());
-    personal.setCp(txtCp.getText());
-    personal.setPoblacion(txtPoblacion.getText());
-    personal.setProvincia(txtProvincia.getText());
 
-    try {
-        instanciaPersonalDaoImp.add(personal);
-        
-    } catch (SQLException ex) {
-        Logger.getLogger(frmPersonal.class.getName()).log(Level.SEVERE, null, ex);
+    private void addPersonal() {
+        PersonalDaoImp instanciaPersonalDaoImp = PersonalDaoImp.getInstance();
+        Personal personal = new Personal();
+        personal.setDni(txtDni.getText());
+        personal.setNombre(txtNombre.getText());
+        personal.setApellido1(txtApellido1.getText());
+        personal.setApellido2(txtApellido2.getText());
+        personal.setTipo(Integer.parseInt(txtTipo.getText()));
+        personal.setTelefono(txtTelefono.getText());
+        personal.setEmail(txtEmail.getText());
+        personal.setDireccion(txtDireccion.getText());
+        personal.setCp(txtCp.getText());
+        personal.setPoblacion(txtPoblacion.getText());
+        personal.setProvincia(txtProvincia.getText());
+
+        try {
+            instanciaPersonalDaoImp.add(personal);
+
+        } catch (SQLException ex) {
+            Logger.getLogger(frmPersonal.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
-}
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
