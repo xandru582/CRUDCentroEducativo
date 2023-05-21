@@ -20,28 +20,28 @@ import java.util.List;
  *
  * @author alejandrobalangutierrez
  */
-public class AlumnoDaoImp implements AlumnoDao{
+public class AlumnoDaoImp implements AlumnoDao {
 
     private static AlumnoDaoImp instance;
-    
-    static{//SOLO SE EJECUTA UNA UNICA VEZ
-        instance= new AlumnoDaoImp();
+
+    static {//SOLO SE EJECUTA UNA UNICA VEZ
+        instance = new AlumnoDaoImp();
     }
-    
-    private AlumnoDaoImp(){
-        
+
+    private AlumnoDaoImp() {
+
     }
-    
-    public static AlumnoDaoImp getInstance(){
+
+    public static AlumnoDaoImp getInstance() {
         return instance;
     }
-    
+
     public int add(Alumno c) throws SQLException {
         //throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
         Connection cn = MyDataSource.getConnection();
         String sql = "insert into alumno (dni,nombre,apellido1,apellido2,fNacimiento,telefono,email,direccion,cp,poblacion)"
                 + " values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-        
+
         PreparedStatement pstm = cn.prepareStatement(sql);
         pstm.setString(1, c.getDni());
         pstm.setString(2, c.getNombre());
@@ -62,23 +62,48 @@ public class AlumnoDaoImp implements AlumnoDao{
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
-    
+    public Alumno getByDni(String dni) throws SQLException {
+        Connection cn = MyDataSource.getConnection();
+        String sql = "SELECT * FROM alumno WHERE dni = ?";
+        PreparedStatement pstm = cn.prepareStatement(sql);
+        pstm.setString(1, dni);
+        ResultSet rs = pstm.executeQuery();
+
+        Alumno alumno = null;
+        if (rs.next()) {
+            alumno = new Alumno();
+            alumno.setId(rs.getInt("id"));
+            alumno.setDni(rs.getString("dni"));
+            alumno.setNombre(rs.getString("nombre"));
+            alumno.setApellido1(rs.getString("apellido1"));
+            alumno.setApellido2(rs.getString("apellido2"));
+            alumno.setfNacimiento(rs.getDate("fNacimiento"));
+            alumno.setTelefono(rs.getString("telefono"));
+            alumno.setEmail(rs.getString("email"));
+            alumno.setDireccion(rs.getString("direccion"));
+            alumno.setCp(rs.getString("cp"));
+            alumno.setPoblacion(rs.getString("poblacion"));
+        }
+
+        rs.close();
+        pstm.close();
+        cn.close();
+
+        return alumno;
+    }
+
     @Override
     public List<Alumno> getAll() throws SQLException {
         //throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
         ArrayList<Alumno> listaAlumnos = new ArrayList<>();
         String sql = "select * from alumno";
-        
-        try( //CON ESTO ME CIERRA TODO LAS COSAS AUTOMATICAMENTE TRY-RESOURCES
-            
-            Connection cn=MyDataSource.getConnection();
-        
-            Statement stmt=cn.createStatement();
-            
-            ResultSet rs = stmt.executeQuery(sql)){
-            
+
+        try ( //CON ESTO ME CIERRA TODO LAS COSAS AUTOMATICAMENTE TRY-RESOURCES
+
+                Connection cn = MyDataSource.getConnection(); Statement stmt = cn.createStatement(); ResultSet rs = stmt.executeQuery(sql)) {
+
             while (rs.next()) {
-                
+
                 Alumno alumno = new Alumno();
                 alumno.setId(rs.getInt("id"));
                 alumno.setDni(rs.getString("dni"));
@@ -94,7 +119,7 @@ public class AlumnoDaoImp implements AlumnoDao{
                 listaAlumnos.add(alumno);
 
             }
-            
+
             rs.close();
             stmt.close();
             return listaAlumnos;
@@ -115,5 +140,5 @@ public class AlumnoDaoImp implements AlumnoDao{
     public int add(AlumnoDao c) throws SQLException {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-    
+
 }
