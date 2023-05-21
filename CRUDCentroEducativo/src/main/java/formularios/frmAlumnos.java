@@ -72,7 +72,7 @@ public class frmAlumnos extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jtAlumnos = new javax.swing.JTable();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         txtBuscar.setText("Escribe y presiona Enter para buscar");
         txtBuscar.addActionListener(new java.awt.event.ActionListener() {

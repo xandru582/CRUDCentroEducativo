@@ -290,18 +290,13 @@ public class frmMain extends javax.swing.JFrame {
     private void optmAlumnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_optmAlumnoActionPerformed
         // TODO add your handling code here:
         
-        for (JInternalFrame object :  pnldEscritorio.getAllFrames()) {
+        /*for (JFrame object :  pnldEscritorio.getAllFrames()) {
             if (object.getClass().equals(frmInternoAlumnos.class)) {
                 System.out.println("YA AÑADIDO");
                 return;
             }
-        }
-        frmInternoAlumnos frmAlum = new frmInternoAlumnos();
-        
-        pnldEscritorio.add(frmAlum);
-        
-        
-        frmAlum.show();
+        }*/
+        frmAlumnos frmAlum = new frmAlumnos();
         frmAlum.setVisible(true);
         
     }//GEN-LAST:event_optmAlumnoActionPerformed

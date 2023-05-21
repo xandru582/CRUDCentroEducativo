@@ -26,8 +26,8 @@ import javax.swing.table.DefaultTableModel;
 public class jpAlumnoDetalle extends javax.swing.JPanel {
     public int id;
     private Alumno alumnoCargado;
-    //public frmAlumnos formAlumnos;
-    public frmInternoAlumnos formInternoAlumnos;
+    public frmAlumnos formAlumnos;
+    //public frmInternoAlumnos formInternoAlumnos;
     /**
      * Creates new form jpAlumnoDetalle
      */
@@ -60,7 +60,7 @@ public class jpAlumnoDetalle extends javax.swing.JPanel {
             cargaCampos();
             JOptionPane.showMessageDialog(null, "La actualización se realizó correctamente.");
             //formAlumnos.cargaTabla();
-            formInternoAlumnos.cargaTabla();
+            formAlumnos.cargaTabla();
             
         } catch (SQLException ex) {
             Logger.getLogger(jpAlumnoDetalle.class.getName()).log(Level.SEVERE, null, ex);
