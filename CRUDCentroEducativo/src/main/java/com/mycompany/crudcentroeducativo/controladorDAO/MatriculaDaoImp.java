@@ -20,6 +20,20 @@ import javax.swing.JOptionPane;
  * @author alejandrobalangutierrez
  */
 public class MatriculaDaoImp implements MatriculaDao {
+    
+    private static MatriculaDaoImp instance;
+    
+    static{//SOLO SE EJECUTA UNA UNICA VEZ
+        instance= new MatriculaDaoImp();
+    }
+    
+    private MatriculaDaoImp(){
+        
+    }
+    
+    public static MatriculaDaoImp getInstance(){
+        return instance;
+    }
 
     @Override
     public int add(Matricula c) throws SQLException {
@@ -133,5 +147,6 @@ public class MatriculaDaoImp implements MatriculaDao {
 
         pstm.close();
     }
+    
 
 }

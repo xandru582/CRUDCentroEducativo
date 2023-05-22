@@ -88,7 +88,7 @@ public class AulaDaoImp implements AulaDao{
          JOptionPane.showMessageDialog(null, "No se ha encontrado");
         return null;
     }
-
+    
     @Override
     public List<Aula> getAll() throws SQLException {
         Connection cn = MyDataSource.getConnection();
