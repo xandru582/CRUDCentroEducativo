@@ -58,8 +58,35 @@ public class AlumnoDaoImp implements AlumnoDao {
     }
 
     @Override
-    public AlumnoDao getById(int id) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public Alumno getById(int id) throws SQLException {
+        //throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        Connection cn = MyDataSource.getConnection();
+        String sql = "SELECT * FROM alumno WHERE id = ?";
+        PreparedStatement pstm = cn.prepareStatement(sql);
+        pstm.setInt(1, id);
+        ResultSet rs = pstm.executeQuery();
+
+        Alumno alumno = null;
+        if (rs.next()) {
+            alumno = new Alumno();
+            alumno.setId(rs.getInt("id"));
+            alumno.setDni(rs.getString("dni"));
+            alumno.setNombre(rs.getString("nombre"));
+            alumno.setApellido1(rs.getString("apellido1"));
+            alumno.setApellido2(rs.getString("apellido2"));
+            alumno.setfNacimiento(rs.getDate("fNacimiento"));
+            alumno.setTelefono(rs.getString("telefono"));
+            alumno.setEmail(rs.getString("email"));
+            alumno.setDireccion(rs.getString("direccion"));
+            alumno.setCp(rs.getString("cp"));
+            alumno.setPoblacion(rs.getString("poblacion"));
+        }
+
+        rs.close();
+        pstm.close();
+        cn.close();
+
+        return alumno;
     }
 
     public Alumno getByDni(String dni) throws SQLException {

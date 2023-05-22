@@ -120,7 +120,7 @@ public class MatriculaDaoImp implements MatriculaDao {
 
         int rowsAffected = pstm.executeUpdate();
         if (rowsAffected > 0) {
-            JOptionPane.showMessageDialog(null, "Actualizado correctamente");
+            //JOptionPane.showMessageDialog(null, "Actualizado correctamente");
         } else {
             JOptionPane.showMessageDialog(null, "Error al actualizar el registro");
         }

@@ -16,7 +16,7 @@ import java.util.List;
 public interface AlumnoDao {
     int add(AlumnoDao c) throws SQLException;
     
-    AlumnoDao getById(int id) throws SQLException;
+    Alumno getById(int id) throws SQLException;
     
     List<Alumno> getAll() throws SQLException;
     

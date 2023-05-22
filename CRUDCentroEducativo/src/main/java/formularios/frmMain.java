@@ -95,6 +95,7 @@ public class frmMain extends javax.swing.JFrame {
         pnldEscritorio = new javax.swing.JDesktopPane();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
+        btnMatricula = new javax.swing.JButton();
         menuBar = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
         openMenuItem = new javax.swing.JMenuItem();
@@ -128,8 +129,16 @@ public class frmMain extends javax.swing.JFrame {
             }
         });
 
+        btnMatricula.setText("MATRICULA");
+        btnMatricula.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMatriculaActionPerformed(evt);
+            }
+        });
+
         pnldEscritorio.setLayer(jButton1, javax.swing.JLayeredPane.DEFAULT_LAYER);
         pnldEscritorio.setLayer(jButton2, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        pnldEscritorio.setLayer(btnMatricula, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout pnldEscritorioLayout = new javax.swing.GroupLayout(pnldEscritorio);
         pnldEscritorio.setLayout(pnldEscritorioLayout);
@@ -140,7 +149,9 @@ public class frmMain extends javax.swing.JFrame {
                 .addComponent(jButton1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(333, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnMatricula, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(177, Short.MAX_VALUE))
         );
         pnldEscritorioLayout.setVerticalGroup(
             pnldEscritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -148,7 +159,8 @@ public class frmMain extends javax.swing.JFrame {
                 .addGap(15, 15, 15)
                 .addGroup(pnldEscritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnMatricula, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(283, Short.MAX_VALUE))
         );
 
@@ -320,6 +332,15 @@ public class frmMain extends javax.swing.JFrame {
         // TODO add your handling code here:
         
     }//GEN-LAST:event_optmAutorizacionesActionPerformed
+
+    private void btnMatriculaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMatriculaActionPerformed
+        // TODO add your handling code here:
+        
+        
+        frmTablaMatricula frmMatricula = new frmTablaMatricula();
+        frmMatricula.setVisible(true);
+        
+    }//GEN-LAST:event_btnMatriculaActionPerformed
     /*public void compruebaFrame(JInternalFrame objeFrame, JDesktopPane panel){
         for (JInternalFrame object : panel.getAllFrames()) {
             if(object.getClass().equals(panel.getClass())){
@@ -373,6 +394,7 @@ public class frmMain extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem aboutMenuItem;
+    private javax.swing.JButton btnMatricula;
     private javax.swing.JMenuItem contentMenuItem;
     private javax.swing.JMenuItem copyMenuItem;
     private javax.swing.JMenu editMenu;

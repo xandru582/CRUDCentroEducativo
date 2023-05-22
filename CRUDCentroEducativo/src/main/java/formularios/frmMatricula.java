@@ -14,6 +14,7 @@ import java.sql.Date;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 /**
@@ -21,7 +22,15 @@ import javax.swing.JOptionPane;
  * @author alejandrobalangutierrez
  */
 public class frmMatricula extends javax.swing.JFrame {
+
     private int idMatriculaInterno;
+
+    public void setIdMatricula(int id) {
+        this.idMatriculaInterno = id;
+        // Puedes usar el ID para cargar los datos correspondientes en el formulario
+        cargarDatosMatricula(idMatriculaInterno);
+    }
+    public frmTablaMatricula miTablaInterna;
     /**
      * Creates new form frmMatricula
      */
@@ -53,7 +62,7 @@ public class frmMatricula extends javax.swing.JFrame {
         btnEliminar = new javax.swing.JButton();
         btnRestablecer = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Helvetica Neue", 1, 24)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -279,6 +288,7 @@ public class frmMatricula extends javax.swing.JFrame {
 
                 // Limpiar campos
                 RestablecerCampos();
+                miTablaInterna.cargaTabla();
             } catch (SQLException e) {
                 JOptionPane.showMessageDialog(this, "Error al agregar la matrícula.", "Error", JOptionPane.ERROR_MESSAGE);
             }
@@ -297,9 +307,10 @@ public class frmMatricula extends javax.swing.JFrame {
     private void eliminarMatricula(int idMatricula) {
         MatriculaDaoImp matriculaDao = MatriculaDaoImp.getInstance();
         try {
-            if(idMatricula!=0){
-            matriculaDao.delete(idMatricula);
-            JOptionPane.showMessageDialog(this, "Matrícula eliminada correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+            if (idMatricula != 0) {
+                matriculaDao.delete(idMatricula);
+                miTablaInterna.cargaTabla();
+                JOptionPane.showMessageDialog(this, "Matrícula eliminada correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
             }
             // Limpiar campos
             RestablecerCampos();
@@ -307,62 +318,86 @@ public class frmMatricula extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Error al eliminar la matrícula.", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
-    
+
     private void actualizarMatricula() {
-    MatriculaDaoImp matriculaDao = MatriculaDaoImp.getInstance();
-    AlumnoDaoImp alumnoDao = AlumnoDaoImp.getInstance();
-    UnidadDaoImp unidadDao = UnidadDaoImp.getInstance();
+        MatriculaDaoImp matriculaDao = MatriculaDaoImp.getInstance();
+        AlumnoDaoImp alumnoDao = AlumnoDaoImp.getInstance();
+        UnidadDaoImp unidadDao = UnidadDaoImp.getInstance();
 
-    try {
-        String dniAlumno = txtDNI.getText();
-        String codigoUnidad = txtCodigoUnidad.getText();
-        Date fechaMatricula = Date.valueOf(txtFmatricula.getText());
-        Date fechaBaja = Date.valueOf(txtFbaja.getText());
+        try {
+            String dniAlumno = txtDNI.getText();
+            String codigoUnidad = txtCodigoUnidad.getText();
+            Date fechaMatricula = Date.valueOf(txtFmatricula.getText());
+            Date fechaBaja = Date.valueOf(txtFbaja.getText());
 
-        // Obtener el objeto de alumno por DNI
-        Alumno alumno = alumnoDao.getByDni(dniAlumno);
+            // Obtener el objeto de alumno por DNI
+            Alumno alumno = alumnoDao.getByDni(dniAlumno);
 
-        if (alumno != null) {
-            // Obtener el ID de alumno
-            int idAlumno = alumno.getId();
+            if (alumno != null) {
+                // Obtener el ID de alumno
+                int idAlumno = alumno.getId();
 
-            // Obtener el objeto de unidad por código
-            Unidad unidad = unidadDao.getByCodigo(codigoUnidad);
+                // Obtener el objeto de unidad por código
+                Unidad unidad = unidadDao.getByCodigo(codigoUnidad);
 
-            if (unidad != null) {
-                // Obtener el ID de unidad
-                int idUnidad = unidad.getId();
+                if (unidad != null) {
+                    // Obtener el ID de unidad
+                    int idUnidad = unidad.getId();
 
-                // Crear el objeto de matrícula
-                Matricula matricula = new Matricula();
-                matricula.setIdmatricula(idMatriculaInterno);
-                matricula.setIdalumno(idAlumno);
-                matricula.setIdunidad(idUnidad);
-                matricula.setFmatricula(fechaMatricula);
-                matricula.setfBaja(fechaBaja);
+                    // Crear el objeto de matrícula
+                    Matricula matricula = new Matricula();
+                    matricula.setIdmatricula(idMatriculaInterno);
+                    matricula.setIdalumno(idAlumno);
+                    matricula.setIdunidad(idUnidad);
+                    matricula.setFmatricula(fechaMatricula);
+                    matricula.setfBaja(fechaBaja);
 
-                // Actualizar la matrícula en la base de datos
-                int rowsAffected = matriculaDao.update(matricula);
-                if (rowsAffected > 0) {
-                    JOptionPane.showMessageDialog(this, "Matrícula actualizada correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+                    // Actualizar la matrícula en la base de datos
+                    int rowsAffected = matriculaDao.update(matricula);
+                    if (rowsAffected > 0) {
+                        JOptionPane.showMessageDialog(this, "Matrícula actualizada correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
 
-                    // Limpiar campos
-                    RestablecerCampos();
+                        // Limpiar campos
+                        RestablecerCampos();
+                        miTablaInterna.cargaTabla();
+                    } else {
+                        JOptionPane.showMessageDialog(this, "Error al actualizar la matrícula.", "Error", JOptionPane.ERROR_MESSAGE);
+                    }
                 } else {
-                    JOptionPane.showMessageDialog(this, "Error al actualizar la matrícula.", "Error", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(this, "No se encontró la unidad.", "Error", JOptionPane.ERROR_MESSAGE);
                 }
             } else {
-                JOptionPane.showMessageDialog(this, "No se encontró la unidad.", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "No se encontró el alumno.", "Error", JOptionPane.ERROR_MESSAGE);
             }
-        } else {
-            JOptionPane.showMessageDialog(this, "No se encontró el alumno.", "Error", JOptionPane.ERROR_MESSAGE);
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(this, "Error al actualizar la matrícula.", "Error", JOptionPane.ERROR_MESSAGE);
         }
-    } catch (SQLException e) {
-        JOptionPane.showMessageDialog(this, "Error al actualizar la matrícula.", "Error", JOptionPane.ERROR_MESSAGE);
     }
-}
 
+    private void cargarDatosMatricula(int id) {
+        MatriculaDaoImp matriculaDaoImp = MatriculaDaoImp.getInstance();
+        AlumnoDaoImp alumnoDaoImp = AlumnoDaoImp.getInstance();
+        UnidadDaoImp unidadDaoImp = UnidadDaoImp.getInstance();
 
+        try {
+            // Obtener la matrícula por su ID
+            Matricula matricula = matriculaDaoImp.getById(id);
+
+            // Obtener el alumno y la unidad relacionados a la matrícula
+            Alumno alumno = alumnoDaoImp.getById(matricula.getIdalumno());
+            Unidad unidad = unidadDaoImp.getById(matricula.getIdunidad());
+
+            // Cargar los datos en los campos correspondientes del formulario
+            txtDNI.setText(alumno.getDni());
+            txtCodigoUnidad.setText(unidad.getCodigo());
+           
+            txtFmatricula.setText(matricula.getFmatricula().toString());
+            txtFbaja.setText(matricula.getfBaja() != null ? matricula.getfBaja().toString() : "");
+        } catch (Exception e) {
+            // Manejar cualquier excepción que ocurra durante la carga de datos
+            e.printStackTrace();
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnActualizar;
