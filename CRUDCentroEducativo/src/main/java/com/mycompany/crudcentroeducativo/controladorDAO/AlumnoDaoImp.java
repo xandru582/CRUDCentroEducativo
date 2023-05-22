@@ -160,7 +160,23 @@ public class AlumnoDaoImp implements AlumnoDao {
 
     @Override
     public void delete(int id) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        Connection cn = null;
+        PreparedStatement stmt = null;
+
+        try {
+            cn = MyDataSource.getConnection();
+            String sql = "DELETE FROM alumno WHERE id = ?";
+            stmt = cn.prepareStatement(sql);
+            stmt.setInt(1, id);
+            stmt.executeUpdate();
+        } finally {
+            if (stmt != null) {
+                stmt.close();
+            }
+            if (cn != null) {
+                cn.close();
+            }
+        }
     }
 
     @Override

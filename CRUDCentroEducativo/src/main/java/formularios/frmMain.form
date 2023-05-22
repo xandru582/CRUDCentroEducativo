@@ -170,7 +170,7 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="btnAutorizaciones" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                  <Component id="jButton2" min="-2" pref="144" max="-2" attributes="0"/>
+                  <Component id="btnAlumnos" min="-2" pref="144" max="-2" attributes="0"/>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Component id="btnMatricula" min="-2" pref="144" max="-2" attributes="0"/>
                   <EmptySpace pref="177" max="32767" attributes="0"/>
@@ -183,7 +183,7 @@
                   <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="btnAutorizaciones" alignment="3" min="-2" pref="53" max="-2" attributes="0"/>
-                      <Component id="jButton2" alignment="3" min="-2" pref="53" max="-2" attributes="0"/>
+                      <Component id="btnAlumnos" alignment="3" min="-2" pref="53" max="-2" attributes="0"/>
                       <Component id="btnMatricula" alignment="3" min="-2" pref="53" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace pref="283" max="32767" attributes="0"/>
@@ -200,12 +200,12 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAutorizacionesActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="jButton2">
+        <Component class="javax.swing.JButton" name="btnAlumnos">
           <Properties>
             <Property name="text" type="java.lang.String" value="ALUMNOS"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton2ActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAlumnosActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btnMatricula">

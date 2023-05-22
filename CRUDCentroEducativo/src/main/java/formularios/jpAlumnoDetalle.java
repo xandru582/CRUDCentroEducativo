@@ -8,11 +8,14 @@ import com.mycompany.crudcentroeducativo.BD.MyDataSource;
 import com.mycompany.crudcentroeducativo.Entidades.Alumno;
 import com.mycompany.crudcentroeducativo.controladorDAO.AlumnoDaoImp;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -24,9 +27,11 @@ import javax.swing.table.DefaultTableModel;
  * @author alejandrobalangutierrez
  */
 public class jpAlumnoDetalle extends javax.swing.JPanel {
+
     public int id;
     private Alumno alumnoCargado;
     public frmAlumnos formAlumnos;
+
     //public frmInternoAlumnos formInternoAlumnos;
     /**
      * Creates new form jpAlumnoDetalle
@@ -35,13 +40,14 @@ public class jpAlumnoDetalle extends javax.swing.JPanel {
         initComponents();
         //cargaDetalle(id);
         //cargaCampos();
-        
+
     }
-    private void actualizaAlumno(){
+
+    private void actualizaAlumno() {
         try {
-            String sql="update alumno set dni=?,nombre=?,apellido1=?,apellido2=?,fNacimiento=?,telefono=?,email=?,direccion=?,cp=?,poblacion=? where id=?";
-            Connection cn=MyDataSource.getConnection();
-            PreparedStatement sentencia=cn.prepareStatement(sql);
+            String sql = "update alumno set dni=?,nombre=?,apellido1=?,apellido2=?,fNacimiento=?,telefono=?,email=?,direccion=?,cp=?,poblacion=? where id=?";
+            Connection cn = MyDataSource.getConnection();
+            PreparedStatement sentencia = cn.prepareStatement(sql);
             sentencia.setString(1, txtDni.getText());
             sentencia.setString(2, txtNombre.getText());
             sentencia.setString(3, txtApellido1.getText());
@@ -61,19 +67,21 @@ public class jpAlumnoDetalle extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null, "La actualización se realizó correctamente.");
             //formAlumnos.cargaTabla();
             formAlumnos.cargaTabla();
-            
+
         } catch (SQLException ex) {
             Logger.getLogger(jpAlumnoDetalle.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    public void cargaDetalle (int id) throws SQLException{
-        this.id=id;
-        lblId.setText(""+id);
+
+    public void cargaDetalle(int id) throws SQLException {
+        this.id = id;
+        lblId.setText("" + id);
         consultaAlumno();
         cargaCampos();
     }
-    private void cargaCampos() throws SQLException{
-        
+
+    private void cargaCampos() throws SQLException {
+
         Alumno alum = this.alumnoCargado;
         txtNombre.setText(alum.getNombre());
         txtApellido1.setText(alum.getApellido1());
@@ -87,23 +95,24 @@ public class jpAlumnoDetalle extends javax.swing.JPanel {
         txtPoblacion.setText(alum.getPoblacion());
         txtTelefono.setText(alum.getTelefono());
         txtDni.setText(alum.getDni());
-        
+
     }
-    private Alumno consultaAlumno() throws SQLException{
+
+    private Alumno consultaAlumno() throws SQLException {
         System.out.println(lblId.getText());
         ArrayList<Alumno> listaAlumnos = new ArrayList<>();
         String sql = "select * from alumno where id = ?";
-        
-        try{ //CON ESTO ME CIERRA TODO LAS COSAS AUTOMATICAMENTE TRY-RESOURCES
-            
-            Connection cn=MyDataSource.getConnection();
-        
-            PreparedStatement sentencia=cn.prepareStatement(sql);
+
+        try { //CON ESTO ME CIERRA TODO LAS COSAS AUTOMATICAMENTE TRY-RESOURCES
+
+            Connection cn = MyDataSource.getConnection();
+
+            PreparedStatement sentencia = cn.prepareStatement(sql);
             sentencia.setInt(1, id);
             ResultSet rs = sentencia.executeQuery();
-            
+
             while (rs.next()) {
-                
+
                 Alumno alumno = new Alumno();
                 alumno.setId(rs.getInt("id"));
                 alumno.setDni(rs.getString("dni"));
@@ -119,15 +128,81 @@ public class jpAlumnoDetalle extends javax.swing.JPanel {
                 listaAlumnos.add(alumno);
 
             }
-            
+
             rs.close();
             sentencia.close();
-            this.alumnoCargado=listaAlumnos.get(0);
+            this.alumnoCargado = listaAlumnos.get(0);
             return listaAlumnos.get(0);
-         }catch(Exception e){
+        } catch (Exception e) {
             return null;
         }
     }
+
+    private void addAlumno() {
+        try {
+            String dni = txtDni.getText();
+            String nombre = txtNombre.getText();
+            String apellido1 = txtApellido1.getText();
+            String apellido2 = txtApellido2.getText();
+            String fNacimiento = txtFnacimiento.getText();
+            String telefono = txtTelefono.getText();
+            String email = txtEmail.getText();
+            String direccion = txtDireccion.getText();
+            String cp = txtCp.getText();
+            String poblacion = txtPoblacion.getText();
+
+            // Validar que los campos no estén vacíos
+            if (dni.isEmpty() || nombre.isEmpty() || apellido1.isEmpty() || fNacimiento.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Por favor, complete los campos obligatorios");
+                return;
+            }
+
+            // Crear un objeto Alumno con los datos ingresados
+            Date fechaNacimiento = Date.valueOf(fNacimiento);
+            Alumno alumno = new Alumno(dni, nombre, apellido1, apellido2, fechaNacimiento, telefono, email, direccion, cp, poblacion);
+
+            // Llamar al método add del AlumnoDaoImp para agregar el alumno a la base de datos
+            AlumnoDaoImp.getInstance().add(alumno);
+
+            // Mostrar mensaje de éxito
+            JOptionPane.showMessageDialog(null, "El alumno se ha añadido correctamente");
+
+            // Restablecer los campos del formulario
+            txtDni.setText("");
+            txtNombre.setText("");
+            txtApellido1.setText("");
+            txtApellido2.setText("");
+            txtFnacimiento.setText("");
+            txtTelefono.setText("");
+            txtEmail.setText("");
+            txtDireccion.setText("");
+            txtCp.setText("");
+            txtPoblacion.setText("");
+
+            // Actualizar la tabla de alumnos en el formulario principal
+            formAlumnos.cargaTabla();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al añadir el alumno: " + ex.getMessage());
+        }
+    }
+
+    private void eliminaAlumno() {
+        try {
+            int idAlumno = Integer.parseInt(lblId.getText());
+
+            // Llamar al método delete del AlumnoDaoImp para eliminar el alumno de la base de datos
+            AlumnoDaoImp.getInstance().delete(idAlumno);
+
+            // Mostrar mensaje de éxito
+            JOptionPane.showMessageDialog(null, "El alumno se ha eliminado correctamente");
+
+            // Actualizar la tabla de alumnos en el formulario principal
+            formAlumnos.cargaTabla();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al eliminar el alumno: " + ex.getMessage());
+        }
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -137,6 +212,7 @@ public class jpAlumnoDetalle extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        btnElimina1 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         lblId = new javax.swing.JLabel();
@@ -163,13 +239,21 @@ public class jpAlumnoDetalle extends javax.swing.JPanel {
         btnRestablecer = new javax.swing.JButton();
         jLabel10 = new javax.swing.JLabel();
         txtDni = new javax.swing.JTextField();
+        btnElimina = new javax.swing.JButton();
+        btnaddAlumno = new javax.swing.JButton();
+
+        btnElimina1.setBackground(new java.awt.Color(51, 204, 0));
+        btnElimina1.setText("Elimina");
+        btnElimina1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnElimina1ActionPerformed(evt);
+            }
+        });
 
         jPanel1.setBackground(new java.awt.Color(255, 153, 153));
 
         jLabel1.setFont(new java.awt.Font("Kefa", 1, 18)); // NOI18N
         jLabel1.setText("Detalle de Alumno");
-
-        lblId.setText("jLabel3");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -178,7 +262,7 @@ public class jpAlumnoDetalle extends javax.swing.JPanel {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 384, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(lblId)
                 .addGap(41, 41, 41))
         );
@@ -200,7 +284,7 @@ public class jpAlumnoDetalle extends javax.swing.JPanel {
 
         jLabel4.setText("Apellido 2");
 
-        jLabel5.setText("Fecha de nacimiento");
+        jLabel5.setText("Fecha de nacimiento (AÑO-MES-DIA)");
 
         jLabel6.setText("Telefono");
 
@@ -242,6 +326,22 @@ public class jpAlumnoDetalle extends javax.swing.JPanel {
             }
         });
 
+        btnElimina.setBackground(new java.awt.Color(51, 204, 0));
+        btnElimina.setText("Elimina");
+        btnElimina.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminaActionPerformed(evt);
+            }
+        });
+
+        btnaddAlumno.setBackground(new java.awt.Color(51, 204, 0));
+        btnaddAlumno.setText("Añade");
+        btnaddAlumno.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnaddAlumnoActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -259,12 +359,13 @@ public class jpAlumnoDetalle extends javax.swing.JPanel {
                         .addComponent(txtApellido2)
                         .addComponent(txtFnacimiento))
                     .addComponent(btnActualiza)
-                    .addComponent(btnRestablecer))
+                    .addComponent(btnRestablecer)
+                    .addComponent(btnElimina)
+                    .addComponent(btnaddAlumno))
                 .addGap(187, 187, 187)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel9)
                     .addComponent(jLabel7)
-                    .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6)
                     .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel8)
@@ -274,7 +375,8 @@ public class jpAlumnoDetalle extends javax.swing.JPanel {
                     .addComponent(jLabel10)
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addComponent(txtDni, javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(txtPoblacion, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 136, Short.MAX_VALUE)))
+                        .addComponent(txtPoblacion, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 136, Short.MAX_VALUE))
+                    .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -309,24 +411,28 @@ public class jpAlumnoDetalle extends javax.swing.JPanel {
                     .addComponent(jLabel9)
                     .addComponent(jLabel5))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtFnacimiento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtCp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtCp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtFnacimiento, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(lblPoblacion)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtPoblacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel10))
+                        .addComponent(jLabel10)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtDni, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(btnActualiza)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnRestablecer)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtDni, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(15, Short.MAX_VALUE))
+                        .addComponent(btnRestablecer)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnElimina)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnaddAlumno)))
+                .addContainerGap(18, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -365,18 +471,35 @@ public class jpAlumnoDetalle extends javax.swing.JPanel {
     }//GEN-LAST:event_btnRestablecerActionPerformed
 
     private void txtDniActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDniActionPerformed
-        
+
     }//GEN-LAST:event_txtDniActionPerformed
 
     private void btnActualizaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizaActionPerformed
         // TODO add your handling code here:
         actualizaAlumno();
     }//GEN-LAST:event_btnActualizaActionPerformed
-    
+
+    private void btnEliminaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminaActionPerformed
+        // TODO add your handling code here:
+        eliminaAlumno();
+    }//GEN-LAST:event_btnEliminaActionPerformed
+
+    private void btnElimina1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnElimina1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnElimina1ActionPerformed
+
+    private void btnaddAlumnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnaddAlumnoActionPerformed
+        // TODO add your handling code here:
+        addAlumno();
+    }//GEN-LAST:event_btnaddAlumnoActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnActualiza;
+    private javax.swing.JButton btnElimina;
+    private javax.swing.JButton btnElimina1;
     private javax.swing.JButton btnRestablecer;
+    private javax.swing.JButton btnaddAlumno;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
