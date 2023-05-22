@@ -24,7 +24,32 @@ public class frmAutorizaciones extends javax.swing.JFrame {
 
     private Alumno miAlumnoInterno;
     private Autorizado miAutorizadoInterno;
+    public frmTablaAutorizaciones miTablaInterna;
+    public void setAlumno(Alumno a){
+        miAlumnoInterno=a;
+        cargarDatosAlumno();
+    }
+    public void setAutorizado(Autorizado a){
+        miAutorizadoInterno=a;
+        cargarDatosAutorizado();
+    }
+    private void cargarDatosAlumno() {
+        if (miAlumnoInterno != null) {
+            txtDniAlumno.setText(miAlumnoInterno.getDni());
+            txtNombreAlumno.setText(miAlumnoInterno.getNombre());
+            txtApellidoAlumno.setText(miAlumnoInterno.getApellido1());
+            // Cargar otros campos del alumno si es necesario
+        }
+    }
 
+    private void cargarDatosAutorizado() {
+        if (miAutorizadoInterno != null) {
+            txtDniAutorizado.setText(miAutorizadoInterno.getDni());
+            txtNombreAutorizado.setText(miAutorizadoInterno.getNombre());
+            txtApellidoAutorizado.setText(miAutorizadoInterno.getApellido1());
+            // Cargar otros campos del autorizado si es necesario
+        }
+    }
     /**
      * Creates new form frmAutorizaciones
      */
@@ -65,7 +90,7 @@ public class frmAutorizaciones extends javax.swing.JFrame {
         btnRestablecer = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Helvetica Neue", 1, 18)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -406,6 +431,7 @@ public class frmAutorizaciones extends javax.swing.JFrame {
             if (rowsAffected > 0) {
                 JOptionPane.showMessageDialog(this, "Autorización agregada correctamente", "Éxito", JOptionPane.INFORMATION_MESSAGE);
                 restablecerCampos();
+                miTablaInterna.cargaTabla();
             } else {
                 JOptionPane.showMessageDialog(this, "No se pudo agregar la autorización", "Error", JOptionPane.ERROR_MESSAGE);
             }
@@ -430,6 +456,7 @@ public class frmAutorizaciones extends javax.swing.JFrame {
             if (autorizacion != null) {
                 autorizacionesDao.delete(autorizacion);
                 restablecerCampos();
+                miTablaInterna.cargaTabla();
                 JOptionPane.showMessageDialog(this, "Autorización eliminada correctamente");
             } else {
                 JOptionPane.showMessageDialog(this, "No existe una autorización para el alumno y autorizado seleccionados");

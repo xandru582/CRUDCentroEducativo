@@ -93,7 +93,7 @@ public class frmMain extends javax.swing.JFrame {
     private void initComponents() {
 
         pnldEscritorio = new javax.swing.JDesktopPane();
-        jButton1 = new javax.swing.JButton();
+        btnAutorizaciones = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         btnMatricula = new javax.swing.JButton();
         menuBar = new javax.swing.JMenuBar();
@@ -115,10 +115,10 @@ public class frmMain extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jButton1.setText("AUTORIZACIONES");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnAutorizaciones.setText("AUTORIZACIONES");
+        btnAutorizaciones.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnAutorizacionesActionPerformed(evt);
             }
         });
 
@@ -136,7 +136,7 @@ public class frmMain extends javax.swing.JFrame {
             }
         });
 
-        pnldEscritorio.setLayer(jButton1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        pnldEscritorio.setLayer(btnAutorizaciones, javax.swing.JLayeredPane.DEFAULT_LAYER);
         pnldEscritorio.setLayer(jButton2, javax.swing.JLayeredPane.DEFAULT_LAYER);
         pnldEscritorio.setLayer(btnMatricula, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
@@ -146,7 +146,7 @@ public class frmMain extends javax.swing.JFrame {
             pnldEscritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnldEscritorioLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jButton1)
+                .addComponent(btnAutorizaciones)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -158,7 +158,7 @@ public class frmMain extends javax.swing.JFrame {
             .addGroup(pnldEscritorioLayout.createSequentialGroup()
                 .addGap(15, 15, 15)
                 .addGroup(pnldEscritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnAutorizaciones, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnMatricula, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(283, Short.MAX_VALUE))
@@ -320,9 +320,11 @@ public class frmMain extends javax.swing.JFrame {
         frmuni.show();
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnAutorizacionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAutorizacionesActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+        frmTablaAutorizaciones frmAutorizaciones = new frmTablaAutorizaciones();
+        frmAutorizaciones.setVisible(true);
+    }//GEN-LAST:event_btnAutorizacionesActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
@@ -394,6 +396,7 @@ public class frmMain extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem aboutMenuItem;
+    private javax.swing.JButton btnAutorizaciones;
     private javax.swing.JButton btnMatricula;
     private javax.swing.JMenuItem contentMenuItem;
     private javax.swing.JMenuItem copyMenuItem;
@@ -401,7 +404,6 @@ public class frmMain extends javax.swing.JFrame {
     private javax.swing.JMenuItem exitMenuItem;
     private javax.swing.JMenu fileMenu;
     private javax.swing.JMenu helpMenu;
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuBar menuBar;

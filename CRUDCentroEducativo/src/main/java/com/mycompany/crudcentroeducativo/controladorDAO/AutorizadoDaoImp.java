@@ -92,7 +92,7 @@ public class AutorizadoDaoImp implements AutorizadoDao{
     
     public Autorizado getById(int id) throws SQLException {
         //throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-        String sql = "select * from autorizado where dni = ?";
+        String sql = "select * from autorizado where id = ?";
         Autorizado autorizado = new Autorizado();
         try{ //CON ESTO ME CIERRA TODO LAS COSAS AUTOMATICAMENTE TRY-RESOURCES
             
