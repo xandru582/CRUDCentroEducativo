@@ -29,6 +29,18 @@ public class frmAutorizados extends javax.swing.JFrame {
      * Creates new form frmAutorizados
      */
     private Autorizado miAutorizado;
+    private frmTablaAutorizado miTablaInterna;
+
+    public void setAutorizado(Autorizado autorizado) {
+        this.miAutorizado = autorizado;
+        CargaCampos();
+    }
+
+    public void setTablaInterna(frmTablaAutorizado tabla) {
+        this.miTablaInterna = tabla;
+        
+    }
+
     public frmAutorizados() {
         initComponents();
     }
@@ -218,10 +230,10 @@ public class frmAutorizados extends javax.swing.JFrame {
     }//GEN-LAST:event_btnDarAltaActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-       miAutorizado=consultaAutorizado();
+        miAutorizado = consultaAutorizado();
         CargaCampos();
-        
-        
+
+
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void btnRestablecerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRestablecerActionPerformed
@@ -243,62 +255,71 @@ public class frmAutorizados extends javax.swing.JFrame {
         // TODO add your handling code here:
         eliminarAutorizado();
     }//GEN-LAST:event_btnEliminarActionPerformed
-    private void RestablecerCampos(){
+    private void RestablecerCampos() {
         txtNombre.setText("");
         txtApellido1.setText("");
         txtApellido2.setText("");
         txtDni.setText("");
         txtParentesco2.setText("");
-        
+
     }
-    private void eliminarAutorizado(){
-         AutorizadoDaoImp instanciaAutorizadoDaoImp = AutorizadoDaoImp.getInstance();
+
+    private void eliminarAutorizado() {
+        AutorizadoDaoImp instanciaAutorizadoDaoImp = AutorizadoDaoImp.getInstance();
         Autorizado autorizado = new Autorizado(txtDni.getText(), txtNombre.getText(), txtApellido1.getText(), txtApellido2.getText(), txtParentesco2.getText());
         try {
             instanciaAutorizadoDaoImp.delete(autorizado.getDni());
+            miTablaInterna.cargaTabla();
         } catch (SQLException ex) {
             Logger.getLogger(frmAutorizados.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    private void updateAutorizado(){
+
+    private void updateAutorizado() {
         AutorizadoDaoImp instanciaAutorizadoDaoImp = AutorizadoDaoImp.getInstance();
         Autorizado autorizado = new Autorizado(txtDni.getText(), txtNombre.getText(), txtApellido1.getText(), txtApellido2.getText(), txtParentesco2.getText());
-        try { 
+        try {
             instanciaAutorizadoDaoImp.update(autorizado);
+            miTablaInterna.cargaTabla();
             JOptionPane.showMessageDialog(null, "Se ha actualizado correctamente");
         } catch (SQLException ex) {
             Logger.getLogger(frmAutorizados.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    private void CargaCampos(){
+
+    private void CargaCampos() {
         txtNombre.setText(miAutorizado.getNombre());
         txtApellido1.setText(miAutorizado.getApellido1());
         txtApellido2.setText(miAutorizado.getApellido2());
         txtDni.setText(miAutorizado.getDni());
         txtParentesco2.setText(miAutorizado.getParentesco());
     }
-    private void AddAutorizado(){
-        
+
+    private void AddAutorizado() {
+
         Autorizado autorizado = new Autorizado(txtDni.getText(), txtNombre.getText(), txtApellido1.getText(), txtApellido2.getText(), txtParentesco2.getText());
         AutorizadoDaoImp instanciaAutorizadoDaoImp = AutorizadoDaoImp.getInstance();
         try {
             instanciaAutorizadoDaoImp.add(autorizado);
             JOptionPane.showMessageDialog(null, "Se ha añadido correctamente");
+            miTablaInterna.cargaTabla();
         } catch (SQLException ex) {
             Logger.getLogger(frmAutorizados.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
     }
-    private Autorizado consultaAutorizado(){
-        
+
+    private Autorizado consultaAutorizado() {
+
         AutorizadoDaoImp instanciaAutorizadoDaoImp = AutorizadoDaoImp.getInstance();
         try {
-            return  instanciaAutorizadoDaoImp.getByDni(txtDni.getText());
+            return instanciaAutorizadoDaoImp.getByDni(txtDni.getText());
         } catch (SQLException ex) {
             Logger.getLogger(frmAutorizados.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
     }
+
     /**
      * @param args the command line arguments
      */
