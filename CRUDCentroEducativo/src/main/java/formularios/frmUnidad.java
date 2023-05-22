@@ -23,6 +23,11 @@ import javax.swing.JOptionPane;
 public class frmUnidad extends javax.swing.JFrame {
 
     private Unidad miUnidad;
+    public frmTablaUnidad miTablaInterna;
+    public void setUnidad(Unidad u) {
+        miUnidad = u;
+        cargaCampos();
+    }
 
     /**
      * Creates new form frmUnidad
@@ -67,8 +72,9 @@ public class frmUnidad extends javax.swing.JFrame {
         btnRestablecer = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
         btnDetalles = new javax.swing.JButton();
+        btnActualizar = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Helvetica Neue", 1, 24)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -78,7 +84,7 @@ public class frmUnidad extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 427, Short.MAX_VALUE)
+            .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 458, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -217,6 +223,13 @@ public class frmUnidad extends javax.swing.JFrame {
             }
         });
 
+        btnActualizar.setText("Actualizar");
+        btnActualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnActualizarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -252,15 +265,17 @@ public class frmUnidad extends javax.swing.JFrame {
                                 .addGap(18, 18, 18)
                                 .addComponent(txtCodigoUnidad, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(26, 26, 26)
+                        .addContainerGap()
                         .addComponent(btnAddUnidad)
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnRestablecer)
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnEliminar)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnDetalles)))
-                .addContainerGap(22, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnDetalles)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnActualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(13, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -296,8 +311,9 @@ public class frmUnidad extends javax.swing.JFrame {
                     .addComponent(btnAddUnidad)
                     .addComponent(btnRestablecer)
                     .addComponent(btnEliminar)
-                    .addComponent(btnDetalles))
-                .addContainerGap(9, Short.MAX_VALUE))
+                    .addComponent(btnDetalles)
+                    .addComponent(btnActualizar))
+                .addContainerGap(7, Short.MAX_VALUE))
         );
 
         getContentPane().add(jPanel2, java.awt.BorderLayout.CENTER);
@@ -332,24 +348,32 @@ public class frmUnidad extends javax.swing.JFrame {
     private void btnAddUnidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddUnidadActionPerformed
         // TODO add your handling code here:
         addUnidad();
-
+        cargaCampos();
 
     }//GEN-LAST:event_btnAddUnidadActionPerformed
 
     private void btnRestablecerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRestablecerActionPerformed
         // TODO add your handling code here:
         restablecerCampos();
+        
     }//GEN-LAST:event_btnRestablecerActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         // TODO add your handling code here:
         deleteUnidad();
+        cargaCampos();
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnDetallesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDetallesActionPerformed
         // TODO add your handling code here:
         cargarDetalles();
     }//GEN-LAST:event_btnDetallesActionPerformed
+
+    private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
+        // TODO add your handling code here:
+        actualizarUnidad();
+        cargaCampos();
+    }//GEN-LAST:event_btnActualizarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -393,10 +417,11 @@ public class frmUnidad extends javax.swing.JFrame {
         String codigoCurso = txtCodigoCurso.getText();
         String dniPersonal = txtDniPersonal.getText();
         String codigoAula = txtCodigoAula.getText();
-
+        System.out.println(Integer.parseInt(codigoCurso));
         try {
             CursoDaoImp cursoDao = CursoDaoImp.getInstance();
-            Curso curso = cursoDao.getByCodigo(codigoCurso);
+            System.out.println(Integer.parseInt(codigoCurso));
+            Curso curso = cursoDao.getById(Integer.parseInt(codigoCurso));
 
             if (curso == null) {
                 JOptionPane.showMessageDialog(this, "El código de curso no es válido");
@@ -412,7 +437,7 @@ public class frmUnidad extends javax.swing.JFrame {
             }
 
             AulaDaoImp aulaDao = AulaDaoImp.getInstance();
-            Aula aula = aulaDao.getByCodigo(codigoAula);
+            Aula aula = aulaDao.getById(Integer.parseInt(codigoAula));
 
             if (aula == null) {
                 JOptionPane.showMessageDialog(this, "El código de aula no es válido");
@@ -482,7 +507,7 @@ public class frmUnidad extends javax.swing.JFrame {
     }
 
     private void cargarDetalles() {
-        
+
         if (miUnidad != null) {
             try {
                 CursoDaoImp cursoDao = CursoDaoImp.getInstance();
@@ -512,8 +537,105 @@ public class frmUnidad extends javax.swing.JFrame {
         }
     }
 
+    private void cargaCampos() {
+        if (miUnidad != null) {
+            txtCodigoUnidad.setText(miUnidad.getCodigo());
+            txtNombreUnidad.setText(miUnidad.getNombre());
+            txtObservaciones.setText(miUnidad.getObservaciones());
+
+            // Obtener los valores de los códigos en lugar de los IDs
+            try {
+                CursoDaoImp cursoDao = CursoDaoImp.getInstance();
+                Curso curso = cursoDao.getById(miUnidad.getIdCurso());
+                if (curso != null) {
+                    txtCodigoCurso.setText(curso.getCodigo());
+                }
+
+                PersonalDaoImp personalDao = PersonalDaoImp.getInstance();
+                Personal tutor = personalDao.getById(miUnidad.getIdTutor());
+                if (tutor != null) {
+                    txtDniPersonal.setText(tutor.getDni());
+                }
+
+                AulaDaoImp aulaDao = AulaDaoImp.getInstance();
+                Aula aula = aulaDao.getById(miUnidad.getIdAula());
+                if (aula != null) {
+                    txtCodigoAula.setText(aula.getCodigo());
+                }
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(this, "Error al cargar los detalles: " + ex.getMessage());
+            }
+        } else {
+            restablecerCampos();
+        }
+    }
+
+    private void actualizarUnidad() {
+        if (miUnidad != null) {
+            String codigoUnidad = txtCodigoUnidad.getText();
+            String nombreUnidad = txtNombreUnidad.getText();
+            String observaciones = txtObservaciones.getText();
+            String codigoCurso = txtCodigoCurso.getText();
+            String dniPersonal = txtDniPersonal.getText();
+            String codigoAula = txtCodigoAula.getText();
+
+            try {
+                CursoDaoImp cursoDao = CursoDaoImp.getInstance();
+                Curso curso = cursoDao.getByCodigo(codigoCurso);
+
+                if (curso == null) {
+                    JOptionPane.showMessageDialog(this, "El código de curso no es válido");
+                    return;
+                }
+
+                PersonalDaoImp personalDao = PersonalDaoImp.getInstance();
+                Personal tutor = personalDao.getByDni(dniPersonal);
+
+                if (tutor == null) {
+                    JOptionPane.showMessageDialog(this, "El DNI del tutor no es válido");
+                    return;
+                }
+
+                AulaDaoImp aulaDao = AulaDaoImp.getInstance();
+                Aula aula = aulaDao.getByCodigo(codigoAula);
+
+                if (aula == null) {
+                    JOptionPane.showMessageDialog(this, "El código de aula no es válido");
+                    return;
+                }
+
+                // Obtener información adicional de la base de datos
+                Curso cursoFromDb = cursoDao.getById(curso.getId());
+                Personal tutorFromDb = personalDao.getByDni(tutor.getDni());
+                Aula aulaFromDb = aulaDao.getByCodigo(aula.getCodigo());
+
+                if (cursoFromDb == null || tutorFromDb == null || aulaFromDb == null) {
+                    JOptionPane.showMessageDialog(this, "No se pudo obtener la información completa de la base de datos");
+                    return;
+                }
+
+                miUnidad.setCodigo(codigoUnidad);
+                miUnidad.setNombre(nombreUnidad);
+                miUnidad.setObservaciones(observaciones);
+                miUnidad.setIdCurso(cursoFromDb.getId());
+                miUnidad.setIdTutor(tutorFromDb.getId());
+                miUnidad.setIdAula(aulaFromDb.getId());
+
+                UnidadDaoImp unidadDao = UnidadDaoImp.getInstance();
+                unidadDao.update(miUnidad);
+
+                JOptionPane.showMessageDialog(this, "La unidad se ha actualizado correctamente");
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(this, "Error al actualizar la unidad: " + ex.getMessage());
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "No hay una unidad seleccionada para actualizar");
+        }
+    }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnActualizar;
     private javax.swing.JButton btnAddUnidad;
     private javax.swing.JButton btnDetalles;
     private javax.swing.JButton btnEliminar;

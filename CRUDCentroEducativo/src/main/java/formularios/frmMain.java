@@ -98,6 +98,10 @@ public class frmMain extends javax.swing.JFrame {
         btnMatricula = new javax.swing.JButton();
         btnAula = new javax.swing.JButton();
         btnAutorizado = new javax.swing.JButton();
+        btnCurso = new javax.swing.JButton();
+        btnCursoAcademico = new javax.swing.JButton();
+        btnUnidad = new javax.swing.JButton();
+        btnPersonal = new javax.swing.JButton();
         menuBar = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
         openMenuItem = new javax.swing.JMenuItem();
@@ -152,11 +156,43 @@ public class frmMain extends javax.swing.JFrame {
             }
         });
 
+        btnCurso.setText("CURSO");
+        btnCurso.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCursoActionPerformed(evt);
+            }
+        });
+
+        btnCursoAcademico.setText("CURSO ACADEMICO");
+        btnCursoAcademico.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCursoAcademicoActionPerformed(evt);
+            }
+        });
+
+        btnUnidad.setText("UNIDAD");
+        btnUnidad.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUnidadActionPerformed(evt);
+            }
+        });
+
+        btnPersonal.setText("PERSONAL");
+        btnPersonal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPersonalActionPerformed(evt);
+            }
+        });
+
         pnldEscritorio.setLayer(btnAutorizaciones, javax.swing.JLayeredPane.DEFAULT_LAYER);
         pnldEscritorio.setLayer(btnAlumnos, javax.swing.JLayeredPane.DEFAULT_LAYER);
         pnldEscritorio.setLayer(btnMatricula, javax.swing.JLayeredPane.DEFAULT_LAYER);
         pnldEscritorio.setLayer(btnAula, javax.swing.JLayeredPane.DEFAULT_LAYER);
         pnldEscritorio.setLayer(btnAutorizado, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        pnldEscritorio.setLayer(btnCurso, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        pnldEscritorio.setLayer(btnCursoAcademico, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        pnldEscritorio.setLayer(btnUnidad, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        pnldEscritorio.setLayer(btnPersonal, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout pnldEscritorioLayout = new javax.swing.GroupLayout(pnldEscritorio);
         pnldEscritorio.setLayout(pnldEscritorioLayout);
@@ -164,16 +200,25 @@ public class frmMain extends javax.swing.JFrame {
             pnldEscritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnldEscritorioLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(pnldEscritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(btnAutorizado, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnAutorizaciones, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnAlumnos, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnMatricula, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnAula, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(pnldEscritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnldEscritorioLayout.createSequentialGroup()
+                        .addGroup(pnldEscritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(btnAutorizado, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnAutorizaciones, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(pnldEscritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(btnAlumnos, javax.swing.GroupLayout.DEFAULT_SIZE, 144, Short.MAX_VALUE)
+                            .addComponent(btnCurso, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(pnldEscritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(btnMatricula, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnCursoAcademico, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(pnldEscritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(btnAula, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnUnidad, javax.swing.GroupLayout.DEFAULT_SIZE, 144, Short.MAX_VALUE)))
+                    .addComponent(btnPersonal, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(18, Short.MAX_VALUE))
         );
         pnldEscritorioLayout.setVerticalGroup(
             pnldEscritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -185,8 +230,14 @@ public class frmMain extends javax.swing.JFrame {
                     .addComponent(btnMatricula, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnAula, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(btnAutorizado, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(212, Short.MAX_VALUE))
+                .addGroup(pnldEscritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnAutorizado, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnCurso, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnCursoAcademico, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnUnidad, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(btnPersonal, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(141, Short.MAX_VALUE))
         );
 
         fileMenu.setMnemonic('f');
@@ -293,7 +344,7 @@ public class frmMain extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pnldEscritorio, javax.swing.GroupLayout.Alignment.TRAILING)
+            .addComponent(pnldEscritorio)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -382,6 +433,28 @@ public class frmMain extends javax.swing.JFrame {
         frmTablaAutorizado frmAutorizado = new frmTablaAutorizado();
         frmAutorizado.setVisible(true);
     }//GEN-LAST:event_btnAutorizadoActionPerformed
+
+    private void btnCursoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCursoActionPerformed
+        // TODO add your handling code here:
+        frmCurso frmCurso1 = new frmCurso();
+        frmCurso1.setVisible(true);
+    }//GEN-LAST:event_btnCursoActionPerformed
+
+    private void btnCursoAcademicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCursoAcademicoActionPerformed
+        // TODO add your handling code here:
+        frmCursoAcademico frmCursoAcademico1 = new frmCursoAcademico();
+        frmCursoAcademico1.setVisible(true);
+    }//GEN-LAST:event_btnCursoAcademicoActionPerformed
+
+    private void btnUnidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUnidadActionPerformed
+        // TODO add your handling code here:
+        frmTablaUnidad fUnidad = new frmTablaUnidad();
+        fUnidad.setVisible(true);
+    }//GEN-LAST:event_btnUnidadActionPerformed
+
+    private void btnPersonalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPersonalActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnPersonalActionPerformed
     /*public void compruebaFrame(JInternalFrame objeFrame, JDesktopPane panel){
         for (JInternalFrame object : panel.getAllFrames()) {
             if(object.getClass().equals(panel.getClass())){
@@ -439,7 +512,11 @@ public class frmMain extends javax.swing.JFrame {
     private javax.swing.JButton btnAula;
     private javax.swing.JButton btnAutorizaciones;
     private javax.swing.JButton btnAutorizado;
+    private javax.swing.JButton btnCurso;
+    private javax.swing.JButton btnCursoAcademico;
     private javax.swing.JButton btnMatricula;
+    private javax.swing.JButton btnPersonal;
+    private javax.swing.JButton btnUnidad;
     private javax.swing.JMenuItem contentMenuItem;
     private javax.swing.JMenuItem copyMenuItem;
     private javax.swing.JMenu editMenu;

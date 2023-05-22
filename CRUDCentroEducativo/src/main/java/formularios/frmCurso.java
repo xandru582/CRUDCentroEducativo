@@ -9,6 +9,8 @@ import com.mycompany.crudcentroeducativo.Entidades.CursoAcademico;
 import com.mycompany.crudcentroeducativo.controladorDAO.CursoAcademicoDaoImp;
 import com.mycompany.crudcentroeducativo.controladorDAO.CursoDaoImp;
 import static java.awt.event.KeyEvent.VK_ENTER;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
@@ -20,6 +22,8 @@ import javax.swing.table.TableRowSorter;
  */
 public class frmCurso extends javax.swing.JFrame {
 
+    private DefaultTableModel modelo;
+
     /**
      * Creates new form frmCurso
      */
@@ -28,26 +32,24 @@ public class frmCurso extends javax.swing.JFrame {
         configTabla();
         cargaTabla();
     }
-    private  void configTabla(){
-        String col[]={"ID","CODIGO","NOMBRE","OBSERVACIONES"};
-        
-        DefaultTableModel modelo = new DefaultTableModel(col,0);
+
+    private void configTabla() {
+        String col[] = {"ID", "CODIGO", "NOMBRE", "OBSERVACIONES", "IDCURSOACADEMICO"};
+        modelo = new DefaultTableModel(col, 0);
         jtCursos.setModel(modelo);
-   
-                
     }
-    private void cargaTabla(){
-        DefaultTableModel modelo = (DefaultTableModel)jtCursos.getModel();
+
+    private void cargaTabla() {
         CursoDaoImp daoCurso = CursoDaoImp.getInstance();
         try {
             modelo.setNumRows(0);
             for (Curso curso : daoCurso.getAll()) {
-            Object [] lista = {curso.getId(),curso.getCodigo(),curso.getNombre(),curso.getObservaciones()};
-            modelo.addRow(lista);
-        }
+                Object[] lista = {curso.getId(), curso.getCodigo(), curso.getNombre(), curso.getObservaciones(), curso.getIdcursoacademico()};
+                modelo.addRow(lista);
+            }
         } catch (Exception e) {
+            // Manejo de errores
         }
-        
     }
 
     /**
@@ -66,8 +68,19 @@ public class frmCurso extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         txtBuscar = new javax.swing.JTextField();
         pnlDetalle = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        txtCodigo = new javax.swing.JTextField();
+        txtNombre = new javax.swing.JTextField();
+        txtObservaciones = new javax.swing.JTextField();
+        txtIdCursoAcademico = new javax.swing.JTextField();
+        btnAgregar = new javax.swing.JButton();
+        btnActualiza = new javax.swing.JButton();
+        btnElimina = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jtCursos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -80,6 +93,11 @@ public class frmCurso extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        jtCursos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jtCursosMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jtCursos);
 
         jLabel1.setText("Buscar");
@@ -125,15 +143,93 @@ public class frmCurso extends javax.swing.JFrame {
                 .addGap(70, 70, 70))
         );
 
+        jLabel2.setText("Codigo");
+
+        jLabel3.setText("Nombre");
+
+        jLabel4.setText("Observaciones");
+
+        jLabel5.setText("IdCursoAcademico");
+
+        btnAgregar.setText("Agregar");
+        btnAgregar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnAgregarMouseClicked(evt);
+            }
+        });
+        btnAgregar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgregarActionPerformed(evt);
+            }
+        });
+
+        btnActualiza.setText("Actualiza");
+        btnActualiza.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnActualizaActionPerformed(evt);
+            }
+        });
+
+        btnElimina.setText("Elimina");
+        btnElimina.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout pnlDetalleLayout = new javax.swing.GroupLayout(pnlDetalle);
         pnlDetalle.setLayout(pnlDetalleLayout);
         pnlDetalleLayout.setHorizontalGroup(
             pnlDetalleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 361, Short.MAX_VALUE)
+            .addGroup(pnlDetalleLayout.createSequentialGroup()
+                .addGroup(pnlDetalleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlDetalleLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(pnlDetalleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel5))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(pnlDetalleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(txtIdCursoAcademico)
+                            .addComponent(txtNombre, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtCodigo, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtObservaciones, javax.swing.GroupLayout.Alignment.LEADING)))
+                    .addGroup(pnlDetalleLayout.createSequentialGroup()
+                        .addGap(23, 23, 23)
+                        .addComponent(btnAgregar)
+                        .addGap(40, 40, 40)
+                        .addComponent(btnActualiza)
+                        .addGap(42, 42, 42)
+                        .addComponent(btnElimina)))
+                .addGap(34, 34, 34))
         );
         pnlDetalleLayout.setVerticalGroup(
             pnlDetalleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGroup(pnlDetalleLayout.createSequentialGroup()
+                .addGap(25, 25, 25)
+                .addGroup(pnlDetalleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(pnlDetalleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel3)
+                    .addComponent(txtNombre, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(pnlDetalleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel4)
+                    .addComponent(txtObservaciones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(pnlDetalleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel5)
+                    .addComponent(txtIdCursoAcademico, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(44, 44, 44)
+                .addGroup(pnlDetalleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnAgregar)
+                    .addComponent(btnActualiza)
+                    .addComponent(btnElimina))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -143,7 +239,7 @@ public class frmCurso extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(pnlTabla, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(pnlDetalle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -173,16 +269,16 @@ public class frmCurso extends javax.swing.JFrame {
 
     private void txtBuscarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyPressed
         // TODO add your handling code here:
-        if(evt.getKeyCode()==VK_ENTER){
+        if (evt.getKeyCode() == VK_ENTER) {
             System.out.println("PULSANDO ENTER");
             DefaultTableModel modelo = (DefaultTableModel) jtCursos.getModel();
             TableRowSorter<TableModel> trSorter = new TableRowSorter<TableModel>(modelo);
-            
+
             jtCursos.setRowSorter(trSorter);
-            
-            if (txtBuscar.getText().length()==0) {
+
+            if (txtBuscar.getText().length() == 0) {
                 trSorter.setRowFilter(null);
-            }else{
+            } else {
                 trSorter.setRowFilter(RowFilter.regexFilter(txtBuscar.getText().trim()));
             }
         }
@@ -191,6 +287,35 @@ public class frmCurso extends javax.swing.JFrame {
     private void txtBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBuscarActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtBuscarActionPerformed
+
+    private void btnAgregarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAgregarMouseClicked
+        // TODO add your handling code here:
+
+
+    }//GEN-LAST:event_btnAgregarMouseClicked
+
+    private void btnActualizaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizaActionPerformed
+        // TODO add your handling code here:
+        actualizaCurso();
+        cargaTabla();
+
+    }//GEN-LAST:event_btnActualizaActionPerformed
+
+    private void btnEliminaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminaActionPerformed
+        // TODO add your handling code here:
+        eliminarCurso();
+    }//GEN-LAST:event_btnEliminaActionPerformed
+
+    private void jtCursosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtCursosMouseClicked
+        // TODO add your handling code here:
+        elementoSeleccionado();
+    }//GEN-LAST:event_jtCursosMouseClicked
+
+    private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
+        // TODO add your handling code here:
+        agregaCurso();
+        cargaTabla();
+    }//GEN-LAST:event_btnAgregarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -227,13 +352,114 @@ public class frmCurso extends javax.swing.JFrame {
         });
     }
 
+    private void elementoSeleccionado() {
+        DefaultTableModel modelo = (DefaultTableModel) jtCursos.getModel();
+
+        jtCursos.getValueAt(jtCursos.getSelectedRow(), 0);
+
+        int numColumn = jtCursos.getColumnCount();
+        CursoAcademico cursito;
+        txtCodigo.setText(String.valueOf(jtCursos.getValueAt(jtCursos.getSelectedRow(), 1)));
+        txtNombre.setText(String.valueOf(jtCursos.getValueAt(jtCursos.getSelectedRow(), 2)));
+        txtObservaciones.setText(String.valueOf(jtCursos.getValueAt(jtCursos.getSelectedRow(), 3)));
+        txtIdCursoAcademico.setText(String.valueOf(jtCursos.getValueAt(jtCursos.getSelectedRow(), 4)));
+    }
+
+    private void actualizaCurso() {
+        int filaSeleccionada = jtCursos.getSelectedRow();
+
+        if (filaSeleccionada != -1) {
+            DefaultTableModel modelo = (DefaultTableModel) jtCursos.getModel();
+            int idCurso = Integer.parseInt(modelo.getValueAt(filaSeleccionada, 0).toString());
+
+            String codigo = txtCodigo.getText();
+            String nombre = txtNombre.getText();
+            String observaciones = txtObservaciones.getText();
+            int idCursoAcademico = Integer.parseInt(txtIdCursoAcademico.getText());
+
+            Curso curso = new Curso();
+            curso.setId(idCurso);
+            curso.setCodigo(codigo);
+            curso.setNombre(nombre);
+            curso.setObservaciones(observaciones);
+            curso.setIdcursoacademico(idCursoAcademico);
+
+            CursoDaoImp daoCurso = CursoDaoImp.getInstance();
+
+            try {
+                daoCurso.update(curso);
+                JOptionPane.showMessageDialog(this, "Curso actualizado correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+                cargaTabla();
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(this, "Error al actualizar el curso: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "No se ha seleccionado ningún curso para actualizar.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private void agregaCurso() {
+        String codigo = txtCodigo.getText();
+        String nombre = txtNombre.getText();
+        String observaciones = txtObservaciones.getText();
+        int idCursoAcademico = Integer.parseInt(txtIdCursoAcademico.getText());
+
+        Curso curso = new Curso();
+        curso.setCodigo(codigo);
+        curso.setNombre(nombre);
+        curso.setObservaciones(observaciones);
+        curso.setIdcursoacademico(idCursoAcademico);
+
+        CursoDaoImp daoCurso = CursoDaoImp.getInstance();
+
+        try {
+            int generatedId = daoCurso.add(curso);
+            curso.setId(generatedId); // Establecer el ID generado en el objeto Curso
+            JOptionPane.showMessageDialog(this, "Curso agregado correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+            cargaTabla();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(this, "Error al agregar el curso: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private void eliminarCurso() {
+        String codigo = txtCodigo.getText();
+
+        CursoDaoImp daoCurso = CursoDaoImp.getInstance();
+
+        try {
+            Curso curso = daoCurso.getByCodigo(codigo);
+
+            if (curso != null) {
+                daoCurso.delete(curso.getId());
+                JOptionPane.showMessageDialog(this, "Curso eliminado correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+                cargaTabla();
+            } else {
+                JOptionPane.showMessageDialog(this, "No se encontró ningún curso con el código especificado.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(this, "Error al eliminar el curso: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnActualiza;
+    private javax.swing.JButton btnAgregar;
+    private javax.swing.JButton btnElimina;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jtCursos;
     private javax.swing.JPanel pnlDetalle;
     private javax.swing.JPanel pnlTabla;
     private javax.swing.JTextField txtBuscar;
+    private javax.swing.JTextField txtCodigo;
+    private javax.swing.JTextField txtIdCursoAcademico;
+    private javax.swing.JTextField txtNombre;
+    private javax.swing.JTextField txtObservaciones;
     // End of variables declaration//GEN-END:variables
 }

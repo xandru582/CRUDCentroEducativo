@@ -162,9 +162,9 @@ public class UnidadDaoImp implements UnidadDao {
         cn.close();
 
         if (rowsUpdated > 0) {
-            JOptionPane.showMessageDialog(null, "Unidad actualizada correctamente");
+            //JOptionPane.showMessageDialog(null, "Unidad actualizada correctamente");
         } else {
-            JOptionPane.showMessageDialog(null, "No se pudo actualizar la unidad");
+            //JOptionPane.showMessageDialog(null, "No se pudo actualizar la unidad");
         }
 
         return rowsUpdated;
