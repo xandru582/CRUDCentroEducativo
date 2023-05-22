@@ -96,6 +96,7 @@ public class frmMain extends javax.swing.JFrame {
         btnAutorizaciones = new javax.swing.JButton();
         btnAlumnos = new javax.swing.JButton();
         btnMatricula = new javax.swing.JButton();
+        btnAula = new javax.swing.JButton();
         menuBar = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
         openMenuItem = new javax.swing.JMenuItem();
@@ -136,9 +137,17 @@ public class frmMain extends javax.swing.JFrame {
             }
         });
 
+        btnAula.setText("AULA");
+        btnAula.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAulaActionPerformed(evt);
+            }
+        });
+
         pnldEscritorio.setLayer(btnAutorizaciones, javax.swing.JLayeredPane.DEFAULT_LAYER);
         pnldEscritorio.setLayer(btnAlumnos, javax.swing.JLayeredPane.DEFAULT_LAYER);
         pnldEscritorio.setLayer(btnMatricula, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        pnldEscritorio.setLayer(btnAula, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout pnldEscritorioLayout = new javax.swing.GroupLayout(pnldEscritorio);
         pnldEscritorio.setLayout(pnldEscritorioLayout);
@@ -151,7 +160,9 @@ public class frmMain extends javax.swing.JFrame {
                 .addComponent(btnAlumnos, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnMatricula, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(177, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnAula, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         pnldEscritorioLayout.setVerticalGroup(
             pnldEscritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -160,7 +171,8 @@ public class frmMain extends javax.swing.JFrame {
                 .addGroup(pnldEscritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAutorizaciones, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnAlumnos, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnMatricula, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnMatricula, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnAula, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(283, Short.MAX_VALUE))
         );
 
@@ -345,6 +357,12 @@ public class frmMain extends javax.swing.JFrame {
         frmMatricula.setVisible(true);
         
     }//GEN-LAST:event_btnMatriculaActionPerformed
+
+    private void btnAulaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAulaActionPerformed
+        // TODO add your handling code here:
+        frmTablaAula frmAula = new frmTablaAula();
+        frmAula.setVisible(true);
+    }//GEN-LAST:event_btnAulaActionPerformed
     /*public void compruebaFrame(JInternalFrame objeFrame, JDesktopPane panel){
         for (JInternalFrame object : panel.getAllFrames()) {
             if(object.getClass().equals(panel.getClass())){
@@ -399,6 +417,7 @@ public class frmMain extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem aboutMenuItem;
     private javax.swing.JButton btnAlumnos;
+    private javax.swing.JButton btnAula;
     private javax.swing.JButton btnAutorizaciones;
     private javax.swing.JButton btnMatricula;
     private javax.swing.JMenuItem contentMenuItem;

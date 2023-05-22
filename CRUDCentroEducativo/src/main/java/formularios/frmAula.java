@@ -19,8 +19,18 @@ public class frmAula extends javax.swing.JFrame {
     /**
      * Creates new form frmAula
      */
+    public frmTablaAula miTablaInterna;
     private Aula aulaInterna;
-
+    private int idAulaInterno;
+    public void setAula(Aula a){
+        aulaInterna=a;
+        cargarDatosAula();
+    }
+    /*public void setIdAula(int id) {
+        this.idAulaInterno = id;
+        // Puedes usar el ID para cargar los datos correspondientes en el formulario
+        cargarDatosAula(idAulaInterno);
+    }*/
     public frmAula() {
         initComponents();
     }
@@ -45,7 +55,7 @@ public class frmAula extends javax.swing.JFrame {
         btnEliminar = new javax.swing.JButton();
         btnRestablecer = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Helvetica Neue", 1, 24)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -222,6 +232,7 @@ public class frmAula extends javax.swing.JFrame {
         AulaDaoImp instanciaDaoImp = AulaDaoImp.getInstance();
         try {
             instanciaDaoImp.delete(aulaInterna.getId());
+            miTablaInterna.cargaTabla();
         } catch (SQLException ex) {
             Logger.getLogger(frmAula.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -230,7 +241,9 @@ public class frmAula extends javax.swing.JFrame {
     private Aula consultaAula() {
         AulaDaoImp instanciaAulaDaoImp = AulaDaoImp.getInstance();
         try {
+            
             return instanciaAulaDaoImp.getByCodigo(txtCodigo.getText());
+            
         } catch (SQLException ex) {
             Logger.getLogger(frmAula.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -253,6 +266,7 @@ public class frmAula extends javax.swing.JFrame {
 
         try {
             instanciaAulaDaoImp.update(aula);
+            miTablaInterna.cargaTabla();
         } catch (SQLException ex) {
             Logger.getLogger(frmAula.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -265,12 +279,34 @@ public class frmAula extends javax.swing.JFrame {
 
     try {
         instanciaAulaDaoImp.add(aula);
+        miTablaInterna.cargaTabla();
     } catch (SQLException ex) {
         Logger.getLogger(frmAula.class.getName()).log(Level.SEVERE, null, ex);
     }
 }
+/*private void cargarDatosAula(int id) {
+        AulaDaoImp aulaDaoImp = AulaDaoImp.getInstance();
 
+        try {
+            // Obtener el aula por su ID
+            Aula aula = aulaDaoImp.getById(id);
 
+            // Cargar los datos en los campos correspondientes del formulario
+            txtCodigo.setText(aula.getCodigo());
+            txtDescripcion.setText(aula.getDescripcion());
+            // Otras asignaciones de datos según tu estructura de aula
+        } catch (SQLException e) {
+            // Manejar cualquier excepción que ocurra durante la carga de datos
+            e.printStackTrace();
+        }
+    }*/
+    private void cargarDatosAula() {
+    if (aulaInterna != null) {
+        txtCodigo.setText(aulaInterna.getCodigo());
+        txtDescripcion.setText(aulaInterna.getDescripcion());
+        // Cargar los demás campos con los datos de aula, si es necesario
+    }
+}
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnActualizar;
