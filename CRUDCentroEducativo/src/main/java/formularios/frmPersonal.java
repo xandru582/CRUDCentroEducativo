@@ -22,7 +22,11 @@ public class frmPersonal extends javax.swing.JFrame {
      * Creates new form frmPersonal
      */
     private Personal miPersonalInterno;
-
+    public frmTablaPersonal miTablaInterna;
+    public void setPersonal(Personal p){
+        miPersonalInterno=p;
+        CargaCampos();
+    }
     public frmPersonal() {
         initComponents();
     }
@@ -66,7 +70,7 @@ public class frmPersonal extends javax.swing.JFrame {
         btnEliminar = new javax.swing.JButton();
         btnRestablecer = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Helvetica Neue", 1, 24)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -266,12 +270,14 @@ public class frmPersonal extends javax.swing.JFrame {
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         // TODO add your handling code here:
         eliminarPersonal();
+        miTablaInterna.cargaTabla();
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
         // TODO add your handling code here:
         if (miPersonalInterno != null) {
             updatePersonal();
+            miTablaInterna.cargaTabla();
         }
 
     }//GEN-LAST:event_btnActualizarActionPerformed
@@ -279,6 +285,7 @@ public class frmPersonal extends javax.swing.JFrame {
     private void btnAddPersonalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddPersonalActionPerformed
         // TODO add your handling code here:
         addPersonal();
+        miTablaInterna.cargaTabla();
     }//GEN-LAST:event_btnAddPersonalActionPerformed
 
     /**

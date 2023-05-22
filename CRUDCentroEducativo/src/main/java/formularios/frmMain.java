@@ -454,6 +454,8 @@ public class frmMain extends javax.swing.JFrame {
 
     private void btnPersonalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPersonalActionPerformed
         // TODO add your handling code here:
+        frmTablaPersonal fTablaPersonal = new frmTablaPersonal();
+        fTablaPersonal.setVisible(true);
     }//GEN-LAST:event_btnPersonalActionPerformed
     /*public void compruebaFrame(JInternalFrame objeFrame, JDesktopPane panel){
         for (JInternalFrame object : panel.getAllFrames()) {

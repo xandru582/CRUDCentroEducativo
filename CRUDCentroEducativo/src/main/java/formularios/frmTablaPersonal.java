@@ -4,6 +4,19 @@
  */
 package formularios;
 
+import com.mycompany.crudcentroeducativo.Entidades.Personal;
+import com.mycompany.crudcentroeducativo.controladorDAO.PersonalDaoImp;
+import java.awt.event.KeyEvent;
+import java.sql.SQLException;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.RowFilter;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
+
 /**
  *
  * @author alejandrobalangutierrez
@@ -15,6 +28,8 @@ public class frmTablaPersonal extends javax.swing.JFrame {
      */
     public frmTablaPersonal() {
         initComponents();
+        configTabla();
+        cargaTabla();
     }
 
     /**
@@ -32,7 +47,7 @@ public class frmTablaPersonal extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jtPersonal = new javax.swing.JTable();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Helvetica Neue", 1, 24)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -137,9 +152,9 @@ public class frmTablaPersonal extends javax.swing.JFrame {
 
     private void btnAddAutorizadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddAutorizadoActionPerformed
         // TODO add your handling code here:
-        frmAutorizaciones autorizacionesForm = new frmAutorizaciones();
-        autorizacionesForm.miTablaInterna=this;
-        autorizacionesForm.setVisible(true);
+        frmPersonal personalForm = new frmPersonal();
+        personalForm.miTablaInterna=this;
+        personalForm.setVisible(true);
     }//GEN-LAST:event_btnAddAutorizadoActionPerformed
 
     private void jtPersonalMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtPersonalMouseClicked
@@ -147,26 +162,20 @@ public class frmTablaPersonal extends javax.swing.JFrame {
             try {
                 System.out.println("DOBLE CLIC");
 
-                // Obtener el valor de la columna 0 (ID Alumno)
-                int idAlumno = Integer.parseInt(jtPersonal.getValueAt(jtPersonal.getSelectedRow(), 0).toString());
+                // Obtener el valor de la columna 0 (ID Personal)
+                int idPersonal = Integer.parseInt(jtPersonal.getValueAt(jtPersonal.getSelectedRow(), 0).toString());
 
-                // Obtener el valor de la columna 3 (ID Autorizado)
-                int idAutorizado = Integer.parseInt(jtPersonal.getValueAt(jtPersonal.getSelectedRow(), 3).toString());
+                // Obtener el objeto Personal según el ID
+                PersonalDaoImp personalDao = PersonalDaoImp.getInstance();
+                Personal personal = personalDao.getById(idPersonal);
 
-                // Obtener los objetos Alumno y Autorizado según los IDs
-                AlumnoDaoImp alumnoDao = AlumnoDaoImp.getInstance();
-                AutorizadoDaoImp autorizadoDao = AutorizadoDaoImp.getInstance();
-                Alumno alumno = alumnoDao.getById(idAlumno);
-                Autorizado autorizado = autorizadoDao.getById(idAutorizado);
-
-                // Abrir formulario de frmAutorizaciones y pasar los objetos Alumno y Autorizado
-                frmAutorizaciones autorizacionesForm = new frmAutorizaciones();
-                autorizacionesForm.setAlumno(alumno);
-                autorizacionesForm.miTablaInterna=this;
-                autorizacionesForm.setAutorizado(autorizado);
-                autorizacionesForm.setVisible(true);
+                // Abrir formulario de frmPersonal and pasar el objeto Personal
+                frmPersonal personalForm = new frmPersonal();
+                personalForm.setPersonal(personal);
+                personalForm.miTablaInterna = this;
+                personalForm.setVisible(true);
             } catch (Exception ex) {
-                Logger.getLogger(frmTablaAutorizaciones.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(frmTablaPersonal.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
 
@@ -205,6 +214,61 @@ public class frmTablaPersonal extends javax.swing.JFrame {
                 new frmTablaPersonal().setVisible(true);
             }
         });
+    }
+
+    private void configTabla() {
+        DefaultTableModel modelo = new DefaultTableModel() {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+
+        modelo.addColumn("ID");
+        modelo.addColumn("DNI");
+        modelo.addColumn("Nombre");
+        modelo.addColumn("Apellido1");
+        modelo.addColumn("Apellido2");
+        modelo.addColumn("Dirección");
+        modelo.addColumn("CP");
+        modelo.addColumn("Población");
+        modelo.addColumn("Provincia");
+        modelo.addColumn("Email");
+        modelo.addColumn("Teléfono");
+        modelo.addColumn("Tipo");
+
+        jtPersonal.setModel(modelo);
+    }
+
+    public void cargaTabla() {
+        DefaultTableModel modelo = (DefaultTableModel) jtPersonal.getModel();
+        modelo.setRowCount(0);
+
+        try {
+            // Obtener los datos del personal de la base de datos
+            PersonalDaoImp personalDao = PersonalDaoImp.getInstance();
+            List<Personal> personalList = personalDao.getAll();
+
+            // Llenar la tabla con los datos del personal
+            for (Personal personal : personalList) {
+                Object[] fila = new Object[12];
+                fila[0] = personal.getId();
+                fila[1] = personal.getDni();
+                fila[2] = personal.getNombre();
+                fila[3] = personal.getApellido1();
+                fila[4] = personal.getApellido2();
+                fila[5] = personal.getDireccion();
+                fila[6] = personal.getCp();
+                fila[7] = personal.getPoblacion();
+                fila[8] = personal.getProvincia();
+                fila[9] = personal.getEmail();
+                fila[10] = personal.getTelefono();
+                fila[11] = personal.getTipo();
+                modelo.addRow(fila);
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, "Error al cargar la tabla de personal: " + ex.getMessage());
+        }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
