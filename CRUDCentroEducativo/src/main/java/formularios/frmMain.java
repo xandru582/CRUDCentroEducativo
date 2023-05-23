@@ -71,9 +71,7 @@ public class frmMain extends javax.swing.JFrame {
                     }
                 });
             }
-            
-           
-            
+
             rs.close();
             pstm.close();
             

@@ -12,6 +12,7 @@ import com.mycompany.crudcentroeducativo.controladorDAO.MatriculaDaoImp;
 import com.mycompany.crudcentroeducativo.controladorDAO.UnidadDaoImp;
 import static java.awt.event.KeyEvent.VK_ENTER;
 import java.awt.event.KeyEvent;
+import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.RowFilter;
@@ -28,10 +29,22 @@ public class frmTablaMatricula extends javax.swing.JFrame {
     /**
      * Creates new form frmTablaMatricula
      */
+    private void CargaDesplegable(){
+        try {
+            comboUnidades.removeAllItems();
+            
+            for (Unidad unidad : UnidadDaoImp.getInstance().getAll()) {
+                comboUnidades.addItem(unidad.getCodigo());
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(frmTablaMatricula.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
     public frmTablaMatricula() {
         initComponents();
         configTabla();
         cargaTabla();
+        CargaDesplegable();
     }
 
     /**
@@ -48,6 +61,7 @@ public class frmTablaMatricula extends javax.swing.JFrame {
         jtMatriculas = new javax.swing.JTable();
         btnAddMatricula = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
+        comboUnidades = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -100,6 +114,13 @@ public class frmTablaMatricula extends javax.swing.JFrame {
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("TABLA MATRICULAS");
 
+        comboUnidades.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        comboUnidades.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboUnidadesActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -109,7 +130,9 @@ public class frmTablaMatricula extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(txtBuscar)
-                        .addGap(395, 395, 395)
+                        .addGap(144, 144, 144)
+                        .addComponent(comboUnidades, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(133, 133, 133)
                         .addComponent(btnAddMatricula)
                         .addGap(43, 43, 43))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 803, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -124,7 +147,8 @@ public class frmTablaMatricula extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnAddMatricula))
+                    .addComponent(btnAddMatricula)
+                    .addComponent(comboUnidades, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(29, 29, 29)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(17, 17, 17))
@@ -143,16 +167,7 @@ public class frmTablaMatricula extends javax.swing.JFrame {
         // TODO add your handling code here:
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             System.out.println("PULSANDO ENTER");
-            DefaultTableModel modelo = (DefaultTableModel) jtMatriculas.getModel();
-            TableRowSorter<TableModel> trSorter = new TableRowSorter<>(modelo);
-
-            jtMatriculas.setRowSorter(trSorter);
-
-            if (txtBuscar.getText().length() == 0) {
-                trSorter.setRowFilter(null);
-            } else {
-                trSorter.setRowFilter(RowFilter.regexFilter(txtBuscar.getText().trim()));
-            }
+            buscarCampo();
         }
     }//GEN-LAST:event_txtBuscarKeyPressed
 
@@ -182,6 +197,12 @@ public class frmTablaMatricula extends javax.swing.JFrame {
                 matriculaForm.miTablaInterna=this;
                 matriculaForm.setVisible(true);
     }//GEN-LAST:event_btnAddMatriculaActionPerformed
+
+    private void comboUnidadesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboUnidadesActionPerformed
+        // TODO add your handling code here:
+        txtBuscar.setText((String) comboUnidades.getSelectedItem());
+        buscarCampo();
+    }//GEN-LAST:event_comboUnidadesActionPerformed
 
     /**
      * @param args the command line arguments
@@ -255,9 +276,22 @@ public class frmTablaMatricula extends javax.swing.JFrame {
         } catch (Exception e) {
         }
     }
+    private void buscarCampo(){
+        DefaultTableModel modelo = (DefaultTableModel) jtMatriculas.getModel();
+            TableRowSorter<TableModel> trSorter = new TableRowSorter<>(modelo);
+
+            jtMatriculas.setRowSorter(trSorter);
+
+            if (txtBuscar.getText().length() == 0) {
+                trSorter.setRowFilter(null);
+            } else {
+                trSorter.setRowFilter(RowFilter.regexFilter(txtBuscar.getText().trim()));
+            }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddMatricula;
+    private javax.swing.JComboBox<String> comboUnidades;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jtMatriculas;
